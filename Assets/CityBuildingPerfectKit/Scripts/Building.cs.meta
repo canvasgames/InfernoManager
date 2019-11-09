@@ -1,0 +1,28 @@
+fileFormatVersion: 2
+guid: 2adfc695b09ef436ead88a5c62faf43e
+timeCreated: 1452609289
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - goGrid: {instanceID: 0}
+  - goArea: {instanceID: 0}
+  - goArrowRoot: {instanceID: 0}
+  - goArrowXMinus: {instanceID: 0}
+  - goArrowXPlus: {instanceID: 0}
+  - goArrowZMinus: {instanceID: 0}
+  - goArrowZPlus: {instanceID: 0}
+  - goCenter: {instanceID: 0}
+  - goXInc: {instanceID: 0}
+  - goZInc: {instanceID: 0}
+  - goRangeIn: {instanceID: 0}
+  - goRangeOut: {instanceID: 0}
+  - ground: {instanceID: 0}
+  - prefUIInfo: {instanceID: 0}
+  - prefUICollect: {instanceID: 0}
+  - explosion: {fileID: 185514, guid: 0aeb05cd1031c5547bd68f85974de8db, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

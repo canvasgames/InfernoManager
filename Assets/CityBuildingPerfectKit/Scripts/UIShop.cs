@@ -56,28 +56,22 @@ namespace BE {
 		// when category tab selected
 		public void CategorySelected(int value) {
 
-                Debug.Log("UIShop::CategorySelected" + value.ToString());
-            if(GLOBALS.s.TUTORIAL_PHASE == 21 && value == 1 )
-            {
+            Debug.Log("UIShop::CategorySelected" + value.ToString());
+
+            if(GLOBALS.s.TUTORIAL_PHASE == 21 && value == 1 ){
                 TutorialController.s.pressBuildImpCasePressed();
             }
 
-        
-                ArrowsShop.s.recieveTab(value);
+            ArrowsShop.s.recieveTab(value);
 
-                for (int i = 0; i < toggleButtons.Length; ++i)
-                {
-                    contents[i].SetActive(toggleButtons[i].isOn ? true : false);
-                }
-
-
-
+            for (int i = 0; i < toggleButtons.Length; ++i){
+                contents[i].SetActive(toggleButtons[i].isOn ? true : false);
+            }
 
 		}
 
 		public void Hide() {
-            if(GLOBALS.s.TUTORIAL_PHASE != 8 && GLOBALS.s.TUTORIAL_PHASE != 15 && GLOBALS.s.TUTORIAL_PHASE != 21)
-            {
+            if(GLOBALS.s.TUTORIAL_PHASE != 8 && GLOBALS.s.TUTORIAL_PHASE != 15 && GLOBALS.s.TUTORIAL_PHASE != 21){
                 BETween.anchoredPosition(rtDialog.gameObject, 0.3f, new Vector3(0, -500)).method = BETweenMethod.easeOut;
                 BETween.alpha(gameObject, 0.3f, 0.5f, 0.0f).method = BETweenMethod.easeOut;
                 BETween.enable(gameObject, 0.01f, false).delay = 0.4f;
@@ -234,8 +228,7 @@ namespace BE {
         void inactivateTabsTutorial()
         {
 
-            for (int i = 0; i < toggleButtons.Length; ++i)
-            {
+            for (int i = 0; i < toggleButtons.Length; ++i){
                 if(i>0)
                     contents[i].SetActive(toggleButtons[i].interactable = false);
             }

@@ -96,13 +96,18 @@ namespace BE {
 		public  static 	BENumber	Gem;
 		public  static 	BENumber	Shield;
         public  static  BENumber    MaxElixir;
-		private static 	int 		Level = 0;
+
+        public static BENumber Sulfur;
+        public static BENumber Evilness;
+
+        private static 	int 		Level = 0;
 		private static 	int 		ExpTotal = 0;
 
         //MINE RESOURCES
         public static int SoulProductionIncTotal = 0;
 
-
+        private float EvilnessTimer = 0;
+        private float EvilnessSeconds = 0;
 
         #endregion
 
@@ -115,7 +120,7 @@ namespace BE {
 			Exp.AddUIImage(BEUtil.GetObject("PanelOverlay/LabelElixir/LabelExp/Fill").GetComponent<Image>());
 			Exp.AddUIImageMax(BEUtil.GetObject("PanelOverlay/LabelElixir/LabelExp/FillLimit").GetComponent<Image>());
 
-			Gold = new BENumber(BENumber.IncType.VALUE, 0, 200000, 555); // initial gold count is 1000
+			Gold = new BENumber(BENumber.IncType.VALUE, 0, 200000, 100); // initial gold count is 1000
 			Gold.AddUIText(BEUtil.GetObject("PanelOverlay/LabelGold/Text").GetComponent<Text>());
             Gold.AddUITextMax(BEUtil.GetObject("PanelOverlay/LabelGold/TextMax").GetComponent<Text>());
             Gold.AddUIImage(BEUtil.GetObject("PanelOverlay/LabelGold/Fill").GetComponent<Image>());
@@ -126,7 +131,23 @@ namespace BE {
 			Elixir.AddUITextMax(BEUtil.GetObject("PanelOverlay/LabelElixir/TextMax").GetComponent<Text>());
 		    Elixir.AddUIImage(BEUtil.GetObject("PanelOverlay/LabelElixir/Fill").GetComponent<Image>());
 
-			Gem = new BENumber(BENumber.IncType.VALUE, 0, 100000000, 50);	// initial gem count is 100	0	
+            //-----------
+
+            //Sulfur
+            Sulfur = new BENumber(BENumber.IncType.VALUE, 0, 999, 555, PayType.Sulfur); // initial Sulfur count is 1000
+            Sulfur.AddUIText(BEUtil.GetObject("PanelOverlay/LabelSulfur/Text").GetComponent<Text>());
+            Sulfur.AddUITextMax(BEUtil.GetObject("PanelOverlay/LabelSulfur/TextMax").GetComponent<Text>());
+            Sulfur.AddUIImage(BEUtil.GetObject("PanelOverlay/LabelSulfur/Fill").GetComponent<Image>());
+
+            //Evilness
+            Evilness = new BENumber(BENumber.IncType.VALUE, 0, 999999, 999999, PayType.Evilness); // initial Evilness count is 1000
+            Evilness.AddUIText(BEUtil.GetObject("PanelOverlay/LabelEvilness/Text").GetComponent<Text>());
+            Evilness.AddUITextMax(BEUtil.GetObject("PanelOverlay/LabelEvilness/TextMax").GetComponent<Text>());
+            Evilness.AddUIImage(BEUtil.GetObject("PanelOverlay/LabelEvilness/Fill").GetComponent<Image>());
+
+            //------------
+
+            Gem = new BENumber(BENumber.IncType.VALUE, 0, 100000000, 50);	// initial gem count is 100	0	
 			Gem.AddUIText(BEUtil.GetObject("PanelOverlay/LabelGem/Text").GetComponent<Text>());
 
             //TBDCURRENCIES SET THEIR VALUE HERE
@@ -232,6 +253,8 @@ namespace BE {
             if (Exp != null) Exp.Update(); else Debug.Log("EXP IS NULL....");
             Gold.Update();
             Elixir.Update();
+            Sulfur.Update();
+            Evilness.Update();
             Gem.Update();
             Shield.ChangeTo(Shield.Target() - (double)deltaTime);
             Shield.Update();
@@ -535,6 +558,20 @@ namespace BE {
                 }
                 #endregion
             }
+
+            //Evilness
+            EvilnessTimer += Time.deltaTime;
+            EvilnessSeconds = EvilnessTimer % 60;
+           
+            if (EvilnessSeconds >= 1)
+            {
+                Evilness.ChangeDelta(-1);
+                Sulfur.ChangeDelta(1);
+                EvilnessSeconds = 0;
+                EvilnessTimer = 0;
+
+            }
+            //---------
         }
         #endregion
 
@@ -808,26 +845,34 @@ namespace BE {
         //check max capacity and, if it is the maximum, set it to maximum.
         public void CapacityCheck() {
 			int GoldCapacityTotal = BEGround.instance.GetCapacityTotal(PayType.Gold);
-		    Debug.Log ("iGoldCapacityTotal:"+GoldCapacityTotal.ToString ());
 			int ElixirCapacityTotal = BEGround.instance.GetCapacityTotal(PayType.Elixir);
-			//Debug.Log ("ElixirCapacityTotal:"+ElixirCapacityTotal.ToString ());
+            int SulfurCapacityTotal = BEGround.instance.GetCapacityTotal(PayType.Sulfur);
+            int EvilnessCapacityTotal = 999999;//BEGround.instance.GetCapacityTotal(PayType.Sulfur);
 
-			Gold.MaxSet(GoldCapacityTotal);
-  
+            Gold.MaxSet( GoldCapacityTotal );
+            Elixir.MaxSet( ElixirCapacityTotal );
+            Sulfur.MaxSet( SulfurCapacityTotal );
+
             if (Gold.Target() > GoldCapacityTotal)
                 Gold.ChangeTo(GoldCapacityTotal);
-    
-			Elixir.MaxSet(ElixirCapacityTotal);
+
+            if (Elixir.Target() > ElixirCapacityTotal)
+                Elixir.ChangeTo(ElixirCapacityTotal);
+
+            if (Sulfur.Target() > SulfurCapacityTotal)
+                Sulfur.ChangeTo(SulfurCapacityTotal);
+
+            if (Evilness.Target() > EvilnessCapacityTotal)
+                Evilness.ChangeTo(EvilnessCapacityTotal);
 
             int NewLevel = TBDatabase.GetLevel(ExpTotal);
             int LevelExpStart = TBDatabase.GetLevelExpTotal(NewLevel);
             Exp.CurrentMaxSet(ElixirCapacityTotal - LevelExpStart);
 
-            if (Elixir.Target() > ElixirCapacityTotal)
-                Elixir.ChangeTo(ElixirCapacityTotal);
-
-			BEGround.instance.DistributeByCapacity(PayType.Gold, (float)Gold.Target());
+            BEGround.instance.DistributeByCapacity(PayType.Gold, (float)Gold.Target());
 			BEGround.instance.DistributeByCapacity(PayType.Elixir, (float)Elixir.Target());
+            BEGround.instance.DistributeByCapacity(PayType.Sulfur, (float)Sulfur.Target());
+            //BEGround.instance.DistributeByCapacity(PayType.Evilness, (float)Evilness.Target());
 
             SoulProductionIncTotal = BEGround.instance.GetSoulProductionInc();
 		}
@@ -865,6 +910,7 @@ namespace BE {
                     { XmlElement ne = xmlDocument.CreateElement("Gem"); ne.SetAttribute("value", Gem.Target().ToString()); xmlDocument.DocumentElement.AppendChild(ne); }
                     { XmlElement ne = xmlDocument.CreateElement("Gold"); ne.SetAttribute("value", Gold.Target().ToString()); xmlDocument.DocumentElement.AppendChild(ne); }
                     { XmlElement ne = xmlDocument.CreateElement("Elixir"); ne.SetAttribute("value", Elixir.Target().ToString()); xmlDocument.DocumentElement.AppendChild(ne); }
+                    { XmlElement ne = xmlDocument.CreateElement("Sulfur"); ne.SetAttribute("value", Sulfur.Target().ToString()); xmlDocument.DocumentElement.AppendChild(ne); }
                     { XmlElement ne = xmlDocument.CreateElement("Shield"); ne.SetAttribute("value", Shield.Target().ToString()); xmlDocument.DocumentElement.AppendChild(ne); }
 
                     Transform trDecoRoot = BEGround.instance.trDecoRoot;
@@ -951,6 +997,7 @@ namespace BE {
                         else if (ele.Name == "Gem") { Gem.ChangeTo(double.Parse(ele.GetAttribute("value"))); }
                         else if (ele.Name == "Gold") { Gold.ChangeTo(double.Parse(ele.GetAttribute("value"))); }
                         else if (ele.Name == "Elixir") { Elixir.ChangeTo(double.Parse(ele.GetAttribute("value"))); }
+                        else if (ele.Name == "Sulfur") { Sulfur.ChangeTo(double.Parse(ele.GetAttribute("value"))); }
                         else if (ele.Name == "Shield") { Shield.ChangeTo(double.Parse(ele.GetAttribute("value"))); }
                         else if (ele.Name == "Building")
                         {

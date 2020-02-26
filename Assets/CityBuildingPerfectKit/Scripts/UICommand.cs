@@ -105,7 +105,8 @@ namespace BE {
 
 			if(payType == PayType.Gold) 		Price.color = ((int)SceneTown.Gold.Target() < BuyPrice) ? Color.red : Color.white;
 			else if(payType == PayType.Elixir) 	Price.color = ((int)SceneTown.Elixir.Target() < BuyPrice) ? Color.red : Color.white;
-			else if(payType == PayType.Gem) 	Price.color = ((int)SceneTown.Gem.Target() < BuyPrice) ? Color.red : Color.white;
+            else if (payType == PayType.Sulfur) Price.color = ((int)SceneTown.Sulfur.Target() < BuyPrice) ? Color.red : Color.white;
+            else if(payType == PayType.Gem) 	Price.color = ((int)SceneTown.Gem.Target() < BuyPrice) ? Color.red : Color.white;
 			else {}
 		}
 		
@@ -407,7 +408,8 @@ namespace BE {
 						int 	BuyPrice = 0;
 						if(building.defNext.BuildGoldPrice != 0) 			{ payType = PayType.Gold; 	BuyPrice = building.defNext.BuildGoldPrice; }
 						else if(building.defNext.BuildElixirPrice != 0) 	{ payType = PayType.Elixir; BuyPrice = building.defNext.BuildElixirPrice; }
-						else if(building.defNext.BuildGemPrice != 0) 		{ payType = PayType.Gem; 	BuyPrice = building.defNext.BuildGemPrice; }
+                        else if (building.defNext.BuildSulfurPrice != 0)    { payType = PayType.Sulfur; BuyPrice = building.defNext.BuildSulfurPrice; }
+                        else if(building.defNext.BuildGemPrice != 0) 		{ payType = PayType.Gem; 	BuyPrice = building.defNext.BuildGemPrice; }
 						else { }
 
 						// add 'upgrade' button

@@ -16,11 +16,12 @@ namespace BE {
 	public enum BDInfo {
 		None				= -1,
 		CapacityGold		= 0, 	
-		CapacityElixir		= 1, 	
-		Capacity			= 2, 	
-		ProductionRate		= 3,	
-		HitPoint			= 4,
-		StorageCapacity		= 5,
+		CapacityElixir		= 1,
+        CapacitySulfur      = 2,
+        Capacity			= 3, 	
+		ProductionRate		= 4,	
+		HitPoint			= 5,
+		StorageCapacity		= 6,
     }
 
 	// use this class to show progress value
@@ -97,7 +98,8 @@ namespace BE {
 				// incase building si town hall, show gold capacity, elixir capacit and hitpoint
 				building.UIFillProgressWithNext(progresses[0], BDInfo.CapacityGold);
 				building.UIFillProgressWithNext(progresses[1], BDInfo.CapacityElixir);
-				building.UIFillProgressWithNext(progresses[2], BDInfo.HitPoint);
+                building.UIFillProgressWithNext(progresses[2], BDInfo.CapacitySulfur);
+                building.UIFillProgressWithNext(progresses[3], BDInfo.HitPoint);
 			}
 			else if(bt.ID == 1) {
 				// incase building is house, only show hitpoint, and disable other progresses

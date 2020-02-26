@@ -310,11 +310,9 @@ namespace BE {
 					// exclude in creation building
 					if(Buildings[i][j].Level == 0) continue;
 
-					// exclude production building such as gold mine, because gols mine has it's own capacity 
-					//if(Buildings[i][j].def.eProductionType == type) continue;
-
-					iReturn += Buildings[i][j].def.StorageCapacity[(int)type];
-
+                    // exclude production building such as gold mine, because gols mine has it's own capacity 
+                    //if(Buildings[i][j].def.eProductionType == type) continue;
+                    iReturn += Buildings[i][j].def.StorageCapacity[(int)type];
                 }
 			}
 			return iReturn;

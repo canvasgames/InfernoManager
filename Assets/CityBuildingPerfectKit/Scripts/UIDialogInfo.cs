@@ -65,7 +65,8 @@ namespace BE {
 				textInfo.text = "This is the heart of your village. Upgrading your Demon Palace unlocks new defenses, buildings, traps and much more.";
 				building.UIFillProgress(progresses[0], BDInfo.CapacityGold);
 				building.UIFillProgress(progresses[1], BDInfo.CapacityElixir);
-				building.UIFillProgress(progresses[2], BDInfo.HitPoint);
+                building.UIFillProgress(progresses[2], BDInfo.CapacitySulfur);
+                building.UIFillProgress(progresses[3], BDInfo.HitPoint);
 			}
 			else if(bt.ID == 1) {
 				// incase building is house, only show hitpoint, and disable other progresses

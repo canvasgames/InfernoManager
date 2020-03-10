@@ -209,6 +209,11 @@ namespace BE
                     {
                         Production += (float)def.ProductionRate * deltaTime * GLOBALS.s.ELIXIR_RESEARCH_EXTRA_PERCENTAGE * QA.s.ProductionMultiplier;
                     }
+                    
+                    else if (def.eProductionType == PayType.Sulfur)
+                    {
+                        Production += ((float)def.ProductionRate * deltaTime * QA.s.ProductionMultiplier)/5;
+                    }
                 }
 
 
@@ -286,7 +291,6 @@ namespace BE
             uiInfo.groupInfo.gameObject.SetActive(false);
             uiInfo.soulsValue.SetActive(false);
             uiInfo.soulsValueTxt.SetActive(false);
-
         }
 
 		public void activateHandTutorialUI(int type, bool hell_gate = false)
@@ -446,7 +450,7 @@ namespace BE
                 }
             }
 
-
+            //uiInfo.groupCollect.gameObject.SetActive(true); //APAGAR
         }
 
         public void UpjustYByState()
@@ -887,6 +891,7 @@ namespace BE
                 finalPos = GameObject.Find("SulfurIcon");
                 for (i = 0; i < count; i++)
                 {
+                    //Trocar para icone de SUlfur
                     myParticles.Add((GameObject)Instantiate(Resources.Load("Prefabs/Sulfur")));
                 }
             }

@@ -563,13 +563,10 @@ namespace BE {
             EvilnessTimer += Time.deltaTime;
             EvilnessSeconds = EvilnessTimer % 60;
            
-            if (EvilnessSeconds >= 1)
-            {
+            if (EvilnessSeconds >= 1){
                 Evilness.ChangeDelta(-1);
-                Sulfur.ChangeDelta(1);
                 EvilnessSeconds = 0;
                 EvilnessTimer = 0;
-
             }
             //---------
         }
@@ -1039,7 +1036,6 @@ namespace BE {
             Vector3 pos = new Vector3(21f, 0f, 10f);
             script.Move(pos);
             if (GLOBALS.s.TUTORIAL_OCCURING) move_camera_to_building(pos,0.5f, 11, -6f, -6f);
-
 
             script.createExplosion();
             BuildingSelect(script);

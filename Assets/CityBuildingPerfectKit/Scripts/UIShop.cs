@@ -130,6 +130,7 @@ namespace BE {
                 bt.Add(TBDatabase.GetBuildingType(3));
                 bt.Add(TBDatabase.GetBuildingType(23));
                 bt.Add(TBDatabase.GetBuildingType(22));
+                bt.Add(TBDatabase.GetBuildingType(24));
                 //bt.Add(TBDatabase.GetBuildingType(5));
                 // bt.Add(TBDatabase.GetBuildingType(6));
                 // bt.Add (TBDatabase.GetBuildingType(2));

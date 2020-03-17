@@ -377,7 +377,10 @@ namespace BE {
 					SetValue = ValueStart;
 				}
 
-				capacitylist[i].Capacity[(int)type] = SetValue;
+                Debug.Log("T CAPACITY> " + capacitylist[i].Capacity.Length );
+                Debug.Log("T >>> " + (int)type);
+
+                capacitylist[i].Capacity[(int)type] = SetValue;
 			}
 		}
 

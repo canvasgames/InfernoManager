@@ -140,7 +140,7 @@ namespace BE {
             Sulfur.AddUIImage(BEUtil.GetObject("PanelOverlay/LabelSulfur/Fill").GetComponent<Image>());
 
             //Evilness
-            Evilness = new BENumber(BENumber.IncType.VALUE, 0, 999999, 999999, PayType.Evilness); // initial Evilness count is 1000
+            Evilness = new BENumber(BENumber.IncType.VALUE, 0, 999, 1999, PayType.Evilness); // initial Evilness count is 1000
             Evilness.AddUIText(BEUtil.GetObject("PanelOverlay/LabelEvilness/Text").GetComponent<Text>());
             Evilness.AddUITextMax(BEUtil.GetObject("PanelOverlay/LabelEvilness/TextMax").GetComponent<Text>());
             Evilness.AddUIImage(BEUtil.GetObject("PanelOverlay/LabelEvilness/Fill").GetComponent<Image>());
@@ -558,17 +558,6 @@ namespace BE {
                 }
                 #endregion
             }
-
-            //Evilness
-            EvilnessTimer += Time.deltaTime;
-            EvilnessSeconds = EvilnessTimer % 60;
-           
-            if (EvilnessSeconds >= 1){
-                Evilness.ChangeDelta(-1);
-                EvilnessSeconds = 0;
-                EvilnessTimer = 0;
-            }
-            //---------
         }
         #endregion
 
@@ -844,11 +833,12 @@ namespace BE {
 			int GoldCapacityTotal = BEGround.instance.GetCapacityTotal(PayType.Gold);
 			int ElixirCapacityTotal = BEGround.instance.GetCapacityTotal(PayType.Elixir);
             int SulfurCapacityTotal = BEGround.instance.GetCapacityTotal(PayType.Sulfur);
-            int EvilnessCapacityTotal = 999999;//BEGround.instance.GetCapacityTotal(PayType.Sulfur);
+            int EvilnessCapacityTotal = BEGround.instance.GetCapacityTotal(PayType.Evilness);
 
             Gold.MaxSet( GoldCapacityTotal );
             Elixir.MaxSet( ElixirCapacityTotal );
             Sulfur.MaxSet( SulfurCapacityTotal );
+            Evilness.MaxSet( EvilnessCapacityTotal );
 
             if (Gold.Target() > GoldCapacityTotal)
                 Gold.ChangeTo(GoldCapacityTotal);
@@ -908,6 +898,7 @@ namespace BE {
                     { XmlElement ne = xmlDocument.CreateElement("Gold"); ne.SetAttribute("value", Gold.Target().ToString()); xmlDocument.DocumentElement.AppendChild(ne); }
                     { XmlElement ne = xmlDocument.CreateElement("Elixir"); ne.SetAttribute("value", Elixir.Target().ToString()); xmlDocument.DocumentElement.AppendChild(ne); }
                     { XmlElement ne = xmlDocument.CreateElement("Sulfur"); ne.SetAttribute("value", Sulfur.Target().ToString()); xmlDocument.DocumentElement.AppendChild(ne); }
+                    { XmlElement ne = xmlDocument.CreateElement("Evilness"); ne.SetAttribute("value", Evilness.Target().ToString()); xmlDocument.DocumentElement.AppendChild(ne); }
                     { XmlElement ne = xmlDocument.CreateElement("Shield"); ne.SetAttribute("value", Shield.Target().ToString()); xmlDocument.DocumentElement.AppendChild(ne); }
 
                     Transform trDecoRoot = BEGround.instance.trDecoRoot;
@@ -995,6 +986,7 @@ namespace BE {
                         else if (ele.Name == "Gold") { Gold.ChangeTo(double.Parse(ele.GetAttribute("value"))); }
                         else if (ele.Name == "Elixir") { Elixir.ChangeTo(double.Parse(ele.GetAttribute("value"))); }
                         else if (ele.Name == "Sulfur") { Sulfur.ChangeTo(double.Parse(ele.GetAttribute("value"))); }
+                        else if (ele.Name == "Evilness") { Evilness.ChangeTo(double.Parse(ele.GetAttribute("value"))); }
                         else if (ele.Name == "Shield") { Shield.ChangeTo(double.Parse(ele.GetAttribute("value"))); }
                         else if (ele.Name == "Building")
                         {

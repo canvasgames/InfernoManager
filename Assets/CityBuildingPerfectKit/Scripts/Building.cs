@@ -214,6 +214,11 @@ namespace BE
                     {
                         Production += ((float)def.ProductionRate * deltaTime * QA.s.ProductionMultiplier)/5;
                     }
+
+                    else if (def.eProductionType == PayType.Evilness)
+                    {
+                        Production += ((float)def.ProductionRate * deltaTime * QA.s.ProductionMultiplier) / 5;
+                    }
                 }
 
 
@@ -771,6 +776,11 @@ namespace BE
                 CapacityTotal = BEGround.instance.GetCapacityTotal(PayType.Elixir);
                 AllProduction = SceneTown.Elixir.Target();
             }
+            else if (def.eProductionType == PayType.Evilness)
+            {
+                CapacityTotal = BEGround.instance.GetCapacityTotal(PayType.Evilness);
+                AllProduction = SceneTown.Evilness.Target();
+            }
             else if (def.eProductionType == PayType.Sulfur)
             {
                 CapacityTotal = BEGround.instance.GetCapacityTotal(PayType.Sulfur);
@@ -893,6 +903,17 @@ namespace BE
                 {
                     //Trocar para icone de SUlfur
                     myParticles.Add((GameObject)Instantiate(Resources.Load("Prefabs/Sulfur")));
+                }
+            }
+            else if (def.eProductionType == PayType.Evilness)
+            {
+                SceneTown.Evilness.ChangeDelta((double)Production);
+                textColor = "<color=orange>";
+                finalPos = GameObject.Find("EvilnessIcon");
+                for (i = 0; i < count; i++)
+                {
+                    //Trocar para icone de SUlfur
+                    myParticles.Add((GameObject)Instantiate(Resources.Load("Prefabs/Evilness")));
                 }
             }
             SceneTown.instance.CapacityCheck();
@@ -1058,13 +1079,12 @@ namespace BE
 
         public float storeSouls(float quant, float portal_x, float portal_y, float portal_z)
         {
-
             BuildingType bt = TBDatabase.GetBuildingType(Type);
             if (def != null && bt.ID >= 11 && bt.ID <= 15)
             {
                 int capacity = def.StorageCapacity[(int)PayType.Elixir];
-       
 
+                
                 if (soulsQuant + quant <= capacity)
                 {
                     if((portal_x !=666 || portal_y !=666) && myParticles2.Count < 30)
@@ -1113,7 +1133,6 @@ namespace BE
             {
                 return 0f;
             }
-
         }
 
         void clearMyParticles2()
@@ -1175,7 +1194,8 @@ namespace BE
             // if user don't have enough resources to upgrade
             if (((defNext.BuildGoldPrice != 0) && (SceneTown.Gold.Target() < defNext.BuildGoldPrice)) &&
                ((defNext.BuildElixirPrice != 0) && (SceneTown.Elixir.Target() < defNext.BuildElixirPrice)) &&
-               ((defNext.BuildElixirPrice != 0) && (SceneTown.Sulfur.Target() < defNext.BuildSulfurPrice)))
+               ((defNext.BuildElixirPrice != 0) && (SceneTown.Sulfur.Target() < defNext.BuildSulfurPrice)) &&
+               ((defNext.BuildEvilnessPrice != 0) && (SceneTown.Evilness.Target() < defNext.BuildEvilnessPrice)))
             {
                 return false;
             }
@@ -1207,6 +1227,7 @@ namespace BE
                 if (payTypeReturn == PayType.Gold) UIDialogMessage.Show("Insufficient Gold", "Ok", "Error");
                 else if (payTypeReturn == PayType.Elixir) UIDialogMessage.Show("Insufficient Elixir", "Ok", "Error");
                 else if (payTypeReturn == PayType.Sulfur) UIDialogMessage.Show("Insufficient Sulfur", "Ok", "Error");
+                else if (payTypeReturn == PayType.Evilness) UIDialogMessage.Show("Insufficient Evilness", "Ok", "Error");
                 //else if(payTypeReturn == PayType.Gem) 		UIDialogMessage.Show("Insufficient Gem", "Ok", "Error");
                 else { }
 
@@ -1283,7 +1304,7 @@ namespace BE
             //SceneTown.instance.GainExp(def.RewardExp);
             // if building has capacity value, then recalc capacity of all resources
 
-            if ((def.StorageCapacity[(int)PayType.Gold] != 0) || (def.StorageCapacity[(int)PayType.Elixir] != 0) || (def.StorageCapacity[(int)PayType.Sulfur] != 0))
+            if ((def.StorageCapacity[(int)PayType.Gold] != 0) || (def.StorageCapacity[(int)PayType.Elixir] != 0) || (def.StorageCapacity[(int)PayType.Sulfur] != 0) || (def.StorageCapacity[(int)PayType.Evilness] != 0))
             {
                 SceneTown.instance.CapacityCheck();
             }
@@ -1303,6 +1324,7 @@ namespace BE
             if ((payTypeReturn == PayType.None) && (_bd.BuildGoldPrice != 0) && (SceneTown.Gold.Target() < _bd.BuildGoldPrice)) payTypeReturn = PayType.Gold;
             if ((payTypeReturn == PayType.None) && (_bd.BuildElixirPrice != 0) && (SceneTown.Elixir.Target() < _bd.BuildElixirPrice)) payTypeReturn = PayType.Elixir;
             if ((payTypeReturn == PayType.None) && (_bd.BuildSulfurPrice != 0) && (SceneTown.Sulfur.Target() < _bd.BuildSulfurPrice)) payTypeReturn = PayType.Sulfur;
+            if ((payTypeReturn == PayType.None) && (_bd.BuildEvilnessPrice != 0) && (SceneTown.Evilness.Target() < _bd.BuildEvilnessPrice)) payTypeReturn = PayType.Evilness;
             if ((payTypeReturn == PayType.None) && (_bd.BuildGemPrice != 0) && (SceneTown.Gem.Target() < _bd.BuildGemPrice)) payTypeReturn = PayType.Gem;
 
             if (payTypeReturn == PayType.None)
@@ -1310,6 +1332,7 @@ namespace BE
                 if (_bd.BuildGoldPrice != 0) SceneTown.Gold.ChangeDelta(-_bd.BuildGoldPrice);
                 if (_bd.BuildElixirPrice != 0) SceneTown.Elixir.ChangeDelta(-_bd.BuildElixirPrice);
                 if (_bd.BuildSulfurPrice != 0) SceneTown.Sulfur.ChangeDelta(-_bd.BuildSulfurPrice);
+                if (_bd.BuildEvilnessPrice != 0) SceneTown.Evilness.ChangeDelta(-_bd.BuildEvilnessPrice);
                 //if(_bd.BuildGemPrice != 0) 		SceneTown.Gem.ChangeDelta(-_bd.BuildGemPrice);
 
                 SceneTown.instance.CapacityCheck();
@@ -1327,6 +1350,7 @@ namespace BE
             if (_bd.BuildGoldPrice != 0) { SceneTown.Gold.ChangeDelta(_bd.BuildGoldPrice / 2); }
             if (_bd.BuildElixirPrice != 0) { SceneTown.Elixir.ChangeDelta(_bd.BuildElixirPrice / 2); }
             if (_bd.BuildSulfurPrice != 0) { SceneTown.Sulfur.ChangeDelta(_bd.BuildSulfurPrice / 2); }
+            if (_bd.BuildEvilnessPrice != 0) { SceneTown.Evilness.ChangeDelta(_bd.BuildEvilnessPrice / 2); }
             if (_bd.BuildGemPrice != 0) { SceneTown.Gem.ChangeDelta(_bd.BuildGemPrice / 2); }
         }
 
@@ -1440,6 +1464,13 @@ namespace BE
                 progress.imageMiddle.fillAmount = 0.0f;
                 progress.imageFront.fillAmount = Capacity[(int)PayType.Sulfur] / (float)(def.Capacity[(int)PayType.Sulfur]);
             }
+            else if (type == BDInfo.CapacityEvilness)
+            {
+                progress.imageIcon.sprite = TBDatabase.GetPayTypeIcon(PayType.Evilness);
+                progress.textInfo.text = "Capacity : " + Capacity[(int)PayType.Evilness].ToString("#,##0") + "/" + def.Capacity[(int)PayType.Evilness].ToString("#,##0");
+                progress.imageMiddle.fillAmount = 0.0f;
+                progress.imageFront.fillAmount = Capacity[(int)PayType.Evilness] / (float)(def.Capacity[(int)PayType.Evilness]);
+            }
             else if (type == BDInfo.Capacity)
             {
                 progress.imageIcon.sprite = TBDatabase.GetPayTypeIcon(def.eProductionType);
@@ -1503,9 +1534,16 @@ namespace BE
             else if (type == BDInfo.CapacitySulfur)
             {
                 progress.imageIcon.sprite = TBDatabase.GetPayTypeIcon(PayType.Sulfur);
-                progress.textInfo.text = "Capacity : " + def.Capacity[(int)PayType.Sulfur].ToString("#,##0") + "+" + (defNext.Capacity[(int)PayType.Sulfur] - def.Capacity[(int)PayType.Elixir]).ToString("#,##0");
+                progress.textInfo.text = "Capacity : " + def.Capacity[(int)PayType.Sulfur].ToString("#,##0") + "+" + (defNext.Capacity[(int)PayType.Sulfur] - def.Capacity[(int)PayType.Sulfur]).ToString("#,##0");
                 progress.imageMiddle.fillAmount = (defNext == null) ? 0.0f : (float)defNext.Capacity[(int)PayType.Sulfur] / (float)defLast.Capacity[(int)PayType.Sulfur];
                 progress.imageFront.fillAmount = (float)def.Capacity[(int)PayType.Sulfur] / (float)defLast.Capacity[(int)PayType.Sulfur];
+            }
+            else if (type == BDInfo.CapacityEvilness)
+            {
+                progress.imageIcon.sprite = TBDatabase.GetPayTypeIcon(PayType.Evilness);
+                progress.textInfo.text = "Capacity : " + def.Capacity[(int)PayType.Evilness].ToString("#,##0") + "+" + (defNext.Capacity[(int)PayType.Evilness] - def.Capacity[(int)PayType.Evilness]).ToString("#,##0");
+                progress.imageMiddle.fillAmount = (defNext == null) ? 0.0f : (float)defNext.Capacity[(int)PayType.Evilness] / (float)defLast.Capacity[(int)PayType.Evilness];
+                progress.imageFront.fillAmount = (float)def.Capacity[(int)PayType.Evilness] / (float)defLast.Capacity[(int)PayType.Evilness];
             }
             else if (type == BDInfo.Capacity)
             {

@@ -18,10 +18,12 @@ namespace BE {
 		CapacityGold		= 0, 	
 		CapacityElixir		= 1,
         CapacitySulfur      = 2,
-        Capacity			= 3, 	
-		ProductionRate		= 4,	
-		HitPoint			= 5,
-		StorageCapacity		= 6,
+        CapacityEvilness    = 3,
+        Capacity			= 4, 	
+		ProductionRate		= 5,	
+		HitPoint			= 6,
+		StorageCapacity		= 7,
+        
     }
 
 	// use this class to show progress value
@@ -99,7 +101,8 @@ namespace BE {
 				building.UIFillProgressWithNext(progresses[0], BDInfo.CapacityGold);
 				building.UIFillProgressWithNext(progresses[1], BDInfo.CapacityElixir);
                 building.UIFillProgressWithNext(progresses[2], BDInfo.CapacitySulfur);
-                building.UIFillProgressWithNext(progresses[3], BDInfo.HitPoint);
+                building.UIFillProgressWithNext(progresses[3], BDInfo.CapacityEvilness);
+                building.UIFillProgressWithNext(progresses[4], BDInfo.HitPoint);
 			}
 			else if(bt.ID == 1) {
 				// incase building is house, only show hitpoint, and disable other progresses

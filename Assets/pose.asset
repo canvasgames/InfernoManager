@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae0543fe805424df99fe08ce744cbe49, type: 3}
+  m_Name: pose
+  m_EditorClassIdentifier: 
+  m_PoseEntries:
+  - path: body
+    localPosition: {x: 16.553316, y: -4.4294043, z: 0}
+    localRotation: {x: 0, y: 0, z: 0.7227952, w: 0.69106233}
+    localScale: {x: 1, y: 1, z: 1}
+  - path: body/head
+    localPosition: {x: 3.9735348, y: 0.0000009536743, z: 0}
+    localRotation: {x: 0, y: 0, z: -0.33877552, w: 0.94086725}
+    localScale: {x: 1, y: 1, z: 1}
+  - path: body/head/mouth
+    localPosition: {x: -0.2657417, y: -0.37394, z: 0}
+    localRotation: {x: 0, y: 0, z: -0.6833258, w: 0.7301137}
+    localScale: {x: 1, y: 1, z: 1}
+  - path: body/arm
+    localPosition: {x: 2.1689472, y: -2.139282, z: 0}
+    localRotation: {x: 0, y: 0, z: -0.61125165, w: 0.7914363}
+    localScale: {x: 1, y: 1, z: 1}
+  - path: body/arm/mug
+    localPosition: {x: 2.8204496, y: 0.00000047683716, z: 0}
+    localRotation: {x: 0, y: 0, z: -0.20459028, w: 0.97884774}
+    localScale: {x: 1, y: 1, z: 1}
+  - path: body/trident
+    localPosition: {x: 1.0172793, y: 3.190919, z: 0}
+    localRotation: {x: -0.000101230326, y: -0.0014999522, z: 0.09289449, w: 0.99567485}
+    localScale: {x: 1, y: 1, z: 1}
+  - path: body/wings
+    localPosition: {x: 4.0088263, y: 1.6227155, z: 0}
+    localRotation: {x: 0, y: 0, z: 0.13118844, w: 0.99135745}
+    localScale: {x: 1, y: 1, z: 1}

@@ -1,0 +1,445 @@
+fileFormatVersion: 2
+guid: 39b6985be63ce9845a7a58edc2c7f32f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: devil_0
+  - first:
+      213: 21300002
+    second: devil_1
+  - first:
+      213: 21300004
+    second: devil_2
+  - first:
+      213: 21300006
+    second: devil_3
+  - first:
+      213: 21300008
+    second: devil_4
+  - first:
+      213: 21300010
+    second: devil_5
+  - first:
+      213: 21300012
+    second: devil_6
+  - first:
+      213: 21300014
+    second: devil_7
+  - first:
+      213: 21300016
+    second: devil_8
+  - first:
+      213: 21300018
+    second: devil_9
+  - first:
+      213: 21300020
+    second: devil_11
+  - first:
+      213: 21300022
+    second: devil_12
+  - first:
+      213: 21300024
+    second: devil_13
+  - first:
+      213: 21300026
+    second: devil_14
+  - first:
+      213: 21300028
+    second: devil_15
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: devil_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 244.99997
+        width: 512
+        height: 835
+      alignment: 9
+      pivot: {x: 0.49804688, y: 0.50119764}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 835c1c53e91fa9340adc0c7ede223eb6
+      internalID: 21300000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: devil_1
+      rect:
+        serializedVersion: 2
+        x: 532
+        y: 541
+        width: 623.2804
+        height: 537
+      alignment: 9
+      pivot: {x: 0.43061975, y: 0.5239127}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7ce6d9f9bd53cf4d8cf332ad1ec6a68
+      internalID: 21300002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: devil_2
+      rect:
+        serializedVersion: 2
+        x: 1121
+        y: 724
+        width: 13
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 684cdedffe7d92f4a8919fa8a3f5c7aa
+      internalID: 21300004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: devil_3
+      rect:
+        serializedVersion: 2
+        x: 1126
+        y: 659
+        width: 447
+        height: 414
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd39b512528db974ca391f0e1d89b1ab
+      internalID: 21300006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: devil_4
+      rect:
+        serializedVersion: 2
+        x: 1571
+        y: 12
+        width: 342
+        height: 753.99994
+      alignment: 9
+      pivot: {x: 0.51754385, y: 0.50000006}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3822b093d69f1d45b2c06b4c8e91cc6
+      internalID: 21300008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: devil_5
+      rect:
+        serializedVersion: 2
+        x: 1209
+        y: 320.00003
+        width: 260
+        height: 278.42416
+      alignment: 9
+      pivot: {x: 0.51153845, y: 0.4956465}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a140cade6e3f08e4bbdfaf6c49a822ec
+      internalID: 21300010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: devil_6
+      rect:
+        serializedVersion: 2
+        x: 1220
+        y: 519
+        width: 4
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd5f5e2140958454c85f0a70b3035190
+      internalID: 21300012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: devil_7
+      rect:
+        serializedVersion: 2
+        x: 105
+        y: 247
+        width: 55
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36be4f100c859e34b896f7579f00242e
+      internalID: 21300014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: devil_8
+      rect:
+        serializedVersion: 2
+        x: 540
+        y: 50.999996
+        width: 389
+        height: 446
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 144d8b4790d299443b0de552d0cc9ad3
+      internalID: 21300016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: devil_9
+      rect:
+        serializedVersion: 2
+        x: 1160
+        y: 238.34067
+        width: 168.8042
+        height: 87.65933
+      alignment: 9
+      pivot: {x: 0.47984588, y: 0.48094514}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d595562404cfceb4aa27bde1c5ca9c3c
+      internalID: 21300018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: devil_11
+      rect:
+        serializedVersion: 2
+        x: 112.00001
+        y: 3
+        width: 225
+        height: 234
+      alignment: 9
+      pivot: {x: 0.4933333, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3bb7ae2df11be44495efe20047e2f4b
+      internalID: 21300020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: devil_12
+      rect:
+        serializedVersion: 2
+        x: 1161
+        y: 122.59831
+        width: 120.836426
+        height: 65.40169
+      alignment: 9
+      pivot: {x: 0.4729496, y: 0.44190997}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19683d8591695b043b4e3b381c408cf6
+      internalID: 21300022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: devil_14
+      rect:
+        serializedVersion: 2
+        x: 1160
+        y: 23.598314
+        width: 121.92395
+        height: 64.40169
+      alignment: 9
+      pivot: {x: 0.9518673, y: 0.4953548}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 816fa6e656cd3704cb0dab0518c90b7f
+      internalID: 21300026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: c0277d6b5b208974ab0ec99c071bd4d4
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 637191142233273168
+  assetBundleName: 
+  assetBundleVariant: 

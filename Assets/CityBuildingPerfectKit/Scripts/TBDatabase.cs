@@ -621,9 +621,46 @@ namespace BE {
             Buildings.Add(bt);
              }*/
 
+            
+
+            //Carregamento de dados dos buildings
+            BuildingDataManager buildingDataManager = new BuildingDataManager();
+
+            //Adiciona buildings
+
+            foreach( BuildingTypeData btd in buildingDataManager.getBuildingsDataList() )
+            {
+                BuildingType bt = new BuildingType(btd.id, btd.name, btd.info, btd.tileX, btd.tileZ, btd.levelMax, btd.category, btd.maxCount);
+
+                foreach(BuildingDefData bdd in btd.defDataList)
+                {
+                    BuildingDef bd = new BuildingDef(bdd.hitpoint, bdd.buildGoldPrice, bdd.buildelixirprice, bdd.buildGemPrice, bdd.buildSulfurPrice, bdd.buildTime, bdd.levelRequired, bdd.rankRequired, bdd.soulProductionInc);
+                    bd.SetStorageCapacity(bdd.hellfireStorage, bdd.elixirStorage, bdd.sulfurStorage, bdd.evilnessStorage);
+                    bd.SetCapacity(bdd.hellfireCapacity, bdd.elixirCapacity, bdd.sulfurCapacity, bdd.evilnessCapacity);
+
+                    if (bdd.hellfireProduction > 0)
+                        bd.SetProduction(PayType.Gold, bdd.hellfireProduction);
+                    else if (bdd.elixirProduction > 0)
+                        bd.SetProduction(PayType.Elixir, bdd.elixirProduction);
+                    else if (bdd.sulfurProduction > 0)
+                        bd.SetProduction(PayType.Sulfur, bdd.sulfurProduction);
+                    else if (bdd.evilnessProduction > 0)
+                        bd.SetProduction(PayType.Evilness, bdd.evilnessProduction);
+                    
+                    bt.Add(bd);
+                }
+
+                Buildings.Add(bt);
+            }
+
+            //Termina adição buildings
+
+
 
 
             //0-Demon Palace
+
+            /*
             {
                 BuildingType bt = new BuildingType(0, "Demon Palace", "Your personal Palace", 6, 6, GLOBALS.s.BUILDING_MAX_LEVEL, 0, "1,1,1,1,1,1,1,1,1,1");
                 { BuildingDef bd = new BuildingDef(1500, 0, 0, 1, 0, 0, 1); bd.SetStorageCapacity(1000, 0, 1000, 800); bt.Add(bd); }
@@ -633,17 +670,19 @@ namespace BE {
                 { BuildingDef bd = new BuildingDef(2400, 1200, 0, 10, 172800, 4, 4); bd.SetStorageCapacity(63000, 0, 0,0); bt.Add(bd); }
                 Buildings.Add(bt);
             }
+            */
+
 
             #region Hut and Wall
             //1-Hut
-            {
+            /*{
                 BuildingType bt = new BuildingType(1, "Hut", "", 2, 2, 1, 0, "0,0,0,0,0,0,0,0,0,0");
                 { BuildingDef bd = new BuildingDef(250, 0, 0, 0,0, 0, 0); bt.Add(bd); }
                 Buildings.Add(bt);
-            }
+            }*/
 
             //2-Wall
-            {
+            /*{
                 BuildingType bt = new BuildingType(2, "Wall", "", 1, 1, 11, 0, "0,25,50,75,100,125,175,225,250,250");
                 { BuildingDef bd = new BuildingDef(300, 50, 0, 0, 0, 0, 2); bt.Add(bd); }
                 { BuildingDef bd = new BuildingDef(500, 1000, 0, 0, 0, 0, 2); bt.Add(bd); }
@@ -657,36 +696,42 @@ namespace BE {
                 //{ BuildingDef bd = new BuildingDef (5500,3000000, 3000000, 0,      0, 9); bt.Add(bd); }
                 //{ BuildingDef bd = new BuildingDef (7000,4000000, 4000000, 0,      0,10); bt.Add(bd); }
                 Buildings.Add(bt);
-            }
+            }*/
             #endregion
 
             //3 - Gold (DEMON OR HELLFIRE) GENERATOR
+            /*
             {
                 BuildingType bt = new BuildingType(3, "Fire Mine", "", 6, 6, GLOBALS.s.BUILDING_MAX_LEVEL, 0, GLOBALS.s.PUNISHER_COUNT_EVOLUTION);
                 //for (int i = 0; i <= GLOBALS.s.BUILDING_MAX_LEVEL; i++) { 
-                { BuildingDef bd = new BuildingDef(400, 100, 0, 1, 0,5, 0, 1); bd.SetCapacity(100 * 12, 0, 0,0);  bd.SetProduction(PayType.Gold, 60); bt.Add(bd); }
-                { BuildingDef bd = new BuildingDef(440, 200, 0, 1, 0,10, 0, 1); bd.SetCapacity(120 * 24, 0, 0,0); bd.SetProduction(PayType.Gold, 120); bt.Add(bd); }
-                { BuildingDef bd = new BuildingDef(480, 500, 0, 2, 0,30, 0, 2); bd.SetCapacity(180 * 36, 0, 0,0); bd.SetProduction(PayType.Gold, 180); bt.Add(bd); }
-                { BuildingDef bd = new BuildingDef(480, 1000, 0, 3,0, 60, 0,  2); bd.SetCapacity(250 * 48, 0, 0,0); bd.SetProduction(PayType.Gold, 250); bt.Add(bd); }
-                { BuildingDef bd = new BuildingDef(480, 1600, 0, 4,0, 2 * 60, 0,  2); bd.SetCapacity(550 * 60, 0, 0,0); bd.SetProduction(PayType.Gold, 550); bt.Add(bd); }
-                { BuildingDef bd = new BuildingDef(480, 4400, 0, 5,0, 5 * 60, 0, 3); bd.SetCapacity(850 * 80, 0, 0,0); bd.SetProduction(PayType.Gold, 850); bt.Add(bd); }
-                { BuildingDef bd = new BuildingDef(480, 11000, 0, 10,0, 10 * 60, 0, 3); bd.SetCapacity(1300 * 100, 0, 0,0); bd.SetProduction(PayType.Gold, 1300); bt.Add(bd); }
-                { BuildingDef bd = new BuildingDef(480, 31600, 0, 20,0, 15 * 60, 0, 4); bd.SetCapacity(3600 * 120, 0, 0,0); bd.SetProduction(PayType.Gold, 3600); bt.Add(bd); }
-                { BuildingDef bd = new BuildingDef(480, 84000, 0, 40,0, 20 * 60, 0, 4); bd.SetCapacity(9700 * 150, 0, 0,0); bd.SetProduction(PayType.Gold, 9700); bt.Add(bd); }
-                { BuildingDef bd = new BuildingDef(480, 224000, 0, 50,0, 30 * 60, 0, 5); bd.SetCapacity(26000 * 180, 0, 0,0); bd.SetProduction(PayType.Gold, 26000); bt.Add(bd); }
-                { BuildingDef bd = new BuildingDef(480, 600000, 0, 75,0, 45 * 60, 0, 5); bd.SetCapacity(71000 * 210, 0, 0,0); bd.SetProduction(PayType.Gold, 71000); bt.Add(bd); }
-                { BuildingDef bd = new BuildingDef(480, 1600200, 0, 100,0, 1 * 60 * 60, 0, 6); bd.SetCapacity(191000 * 240, 0, 0,0); bd.SetProduction(PayType.Gold, 191000); bt.Add(bd); }
-                Buildings.Add(bt);
-            }
+                { BuildingDef bd = new BuildingDef(400, 100, 0, 1, 0, 5, 0, 1); bd.SetCapacity(100 * 12, 0, 0, 0); bd.SetProduction(PayType.Gold, 60); bt.Add(bd); }
+                { BuildingDef bd = new BuildingDef(440, 200, 0, 1, 0, 10, 0, 1); bd.SetCapacity(120 * 24, 0, 0, 0); bd.SetProduction(PayType.Gold, 120); bt.Add(bd); }
+                { BuildingDef bd = new BuildingDef(480, 500, 0, 2, 0, 30, 0, 2); bd.SetCapacity(180 * 36, 0, 0, 0); bd.SetProduction(PayType.Gold, 180); bt.Add(bd); }
+                { BuildingDef bd = new BuildingDef(480, 1000, 0, 3, 0, 60, 0, 2); bd.SetCapacity(250 * 48, 0, 0, 0); bd.SetProduction(PayType.Gold, 250); bt.Add(bd); }
+            }*/
+            /*
+            { BuildingDef bd = new BuildingDef(480, 1600, 0, 4,0, 2 * 60, 0,  2); bd.SetCapacity(550 * 60, 0, 0,0); bd.SetProduction(PayType.Gold, 550); bt.Add(bd); }
+            { BuildingDef bd = new BuildingDef(480, 4400, 0, 5,0, 5 * 60, 0, 3); bd.SetCapacity(850 * 80, 0, 0,0); bd.SetProduction(PayType.Gold, 850); bt.Add(bd); }
+            { BuildingDef bd = new BuildingDef(480, 11000, 0, 10,0, 10 * 60, 0, 3); bd.SetCapacity(1300 * 100, 0, 0,0); bd.SetProduction(PayType.Gold, 1300); bt.Add(bd); }
+            { BuildingDef bd = new BuildingDef(480, 31600, 0, 20,0, 15 * 60, 0, 4); bd.SetCapacity(3600 * 120, 0, 0,0); bd.SetProduction(PayType.Gold, 3600); bt.Add(bd); }
+            { BuildingDef bd = new BuildingDef(480, 84000, 0, 40,0, 20 * 60, 0, 4); bd.SetCapacity(9700 * 150, 0, 0,0); bd.SetProduction(PayType.Gold, 9700); bt.Add(bd); }
+            { BuildingDef bd = new BuildingDef(480, 224000, 0, 50,0, 30 * 60, 0, 5); bd.SetCapacity(26000 * 180, 0, 0,0); bd.SetProduction(PayType.Gold, 26000); bt.Add(bd); }
+            { BuildingDef bd = new BuildingDef(480, 600000, 0, 75,0, 45 * 60, 0, 5); bd.SetCapacity(71000 * 210, 0, 0,0); bd.SetProduction(PayType.Gold, 71000); bt.Add(bd); }
+            { BuildingDef bd = new BuildingDef(480, 1600200, 0, 100,0, 1 * 60 * 60, 0, 6); bd.SetCapacity(191000 * 240, 0, 0,0); bd.SetProduction(PayType.Gold, 191000); bt.Add(bd); }
+            Buildings.Add(bt);
+        }
+        */
 
             //4 - Hell's Gate (Old Elixir Collector)
-            {
-
+            /*{
                 BuildingType bt = new BuildingType(4, "Hells Gate", "", 6, 6, GLOBALS.s.BUILDING_MAX_LEVEL, 0, GLOBALS.s.PUNISHER_COUNT_EVOLUTION);
                 //for (int i = 0; i <= GLOBALS.s.BUILDING_MAX_LEVEL; i++) { 
-                { BuildingDef bd = new BuildingDef(400, 100, 0, 0, 0, 5, 0, 1); bd.SetCapacity(0, 100 * 12, 0,0); bd.SetProduction(PayType.Elixir, 100); bt.Add(bd); }
-                { BuildingDef bd = new BuildingDef(440, 300, 0, 1,0, 10, 0, 1); bd.SetCapacity(0, 150 * 24, 0,0); bd.SetProduction(PayType.Elixir, 150); bt.Add(bd); }
-                { BuildingDef bd = new BuildingDef(480, 600, 0, 2,0, 30, 0, 2); bd.SetCapacity(0, 8000, 0,0); bd.SetProduction(PayType.Elixir, 200); bt.Add(bd); }
+                { BuildingDef bd = new BuildingDef(400, 100, 0, 0, 0, 5, 0, 1); bd.SetCapacity(0, 100 * 12, 0, 0); bd.SetProduction(PayType.Elixir, 100); bt.Add(bd); }
+                { BuildingDef bd = new BuildingDef(440, 300, 0, 1, 0, 10, 0, 1); bd.SetCapacity(0, 150 * 24, 0, 0); bd.SetProduction(PayType.Elixir, 150); bt.Add(bd); }
+                { BuildingDef bd = new BuildingDef(480, 600, 0, 2, 0, 30, 0, 2); bd.SetCapacity(0, 8000, 0, 0); bd.SetProduction(PayType.Elixir, 200); bt.Add(bd); }
+                Buildings.Add(bt);
+            }/*
+            /*
                 { BuildingDef bd = new BuildingDef(480, 1100, 0, 3,0, 60, 0, 2); bd.SetCapacity(0, 14400, 0,0); bd.SetProduction(PayType.Elixir, 250); bt.Add(bd); }
                 { BuildingDef bd = new BuildingDef(480, 1600, 0, 4,0, 2 * 60, 0, 2); bd.SetCapacity(0, 25200, 0,0); bd.SetProduction(PayType.Elixir, 300); bt.Add(bd); }
                 { BuildingDef bd = new BuildingDef(480, 4400, 0, 5,0, 5 * 60, 0, 3); bd.SetCapacity(0, 50000, 0,0); bd.SetProduction(PayType.Elixir, 350); bt.Add(bd); }
@@ -696,7 +741,7 @@ namespace BE {
                 { BuildingDef bd = new BuildingDef(480, 224000, 0, 9,0, 30 * 60, 0, 5); bd.SetCapacity(0, 1115750, 0,0); bd.SetProduction(PayType.Elixir, 600); bt.Add(bd); }
                 { BuildingDef bd = new BuildingDef(480, 600000, 0, 10,0, 45 * 60, 0, 5); bd.SetCapacity(0, 1500000, 0,0); bd.SetProduction(PayType.Elixir, 650); bt.Add(bd); }
                 { BuildingDef bd = new BuildingDef(480, 1600200, 0, 11,0, 1 * 60 * 60, 0, 6); bd.SetCapacity(0, 1850000, 0,0); bd.SetProduction(PayType.Elixir, 700); bt.Add(bd); }
-                Buildings.Add(bt);
+                
             }
 
             /*
@@ -710,7 +755,7 @@ namespace BE {
 
             #region ========== City Builder Buildings (not used) ==============
             //5-Gold Storage
-            {
+            /*{
                 BuildingType bt = new BuildingType(5, "Gold Storage", "", 3, 3, 11, 0, "1,1,2,2,2,2,2,3,4,4");
                 { BuildingDef bd = new BuildingDef(400, 0, 300, 0,0,10, 1); bd.SetCapacity(1000, 0, 0,0); bt.Add(bd); }
                 { BuildingDef bd = new BuildingDef(600, 0, 750, 0,0,1800, 2); bd.SetCapacity(3000, 0, 0,0); bt.Add(bd); }
@@ -802,17 +847,23 @@ namespace BE {
                 { BuildingDef bd = new BuildingDef(250, 8900, 0, 6,0, 5 * 60, 0, 5); bd.SetStorageCapacity(0, 1250, 0,0); bt.Add(bd); } //20
                 Buildings.Add(bt);
             }
+            */
+
             //15 - Justin Biba
-            {
+            /*{
                 BuildingType bt = new BuildingType(15, "Pop Music", "", 3, 2, GLOBALS.s.BUILDING_MAX_LEVEL, 0, GLOBALS.s.PUNISHER_COUNT_EVOLUTION);
-                { BuildingDef bd = new BuildingDef(250, 100, 0, 0, 0,5, 0, 1); bd.SetStorageCapacity(0, 150, 0, 0); bt.Add(bd); } //20
-                { BuildingDef bd = new BuildingDef(250, 200, 0, 2, 0,30, 0, 2); bd.SetStorageCapacity(0, 300, 0,0); bt.Add(bd); } //20
-                { BuildingDef bd = new BuildingDef(250, 750, 0, 3, 0,60, 0, 2); bd.SetStorageCapacity(0, 500, 0,0); bt.Add(bd); } //20
+                { BuildingDef bd = new BuildingDef(250, 100, 0, 0, 0, 5, 0, 1); bd.SetStorageCapacity(0, 150, 0, 0); bt.Add(bd); } //20
+                { BuildingDef bd = new BuildingDef(250, 200, 0, 2, 0, 30, 0, 2); bd.SetStorageCapacity(0, 300, 0, 0); bt.Add(bd); } //20
+                { BuildingDef bd = new BuildingDef(250, 750, 0, 3, 0, 60, 0, 2); bd.SetStorageCapacity(0, 500, 0, 0); bt.Add(bd); } //20
+                Buildings.Add(bt);
+            }*/
+            /*
                 { BuildingDef bd = new BuildingDef(250, 1250, 0, 4,0, 2 * 60, 0, 3); bd.SetStorageCapacity(0, 750, 0,0); bt.Add(bd); } //20
                 { BuildingDef bd = new BuildingDef(250, 3300, 0, 5,0, 3 * 60, 0, 4); bd.SetStorageCapacity(0, 1000, 0,0); bt.Add(bd); } //20
                 { BuildingDef bd = new BuildingDef(250, 8900, 0, 6,0, 5 * 60, 0, 5); bd.SetStorageCapacity(0, 1250, 0,0); bt.Add(bd); } //20
                 Buildings.Add(bt);
             }
+            /*
             //16 - Fire Pool
             {
                 BuildingType bt = new BuildingType(16, "Call Center", "", 4, 3, GLOBALS.s.BUILDING_MAX_LEVEL, 0, GLOBALS.s.PUNISHER_COUNT_EVOLUTION);
@@ -933,9 +984,7 @@ namespace BE {
                 { BuildingDef bd = new BuildingDef(480, 600000, 700, 0,0, 45 * 60, 5,14); bd.SetCapacity(71000 * 210, 0, 0,0); bd.SetProduction(PayType.Gold, 71000); bt.Add(bd); }
                 { BuildingDef bd = new BuildingDef(480, 1600200, 700, 0,0, 1 * 60 * 60, 6,15); bd.SetCapacity(191000 * 240, 0, 0,0); bd.SetProduction(PayType.Gold, 191000); bt.Add(bd); }
                 Buildings.Add(bt);
-            }
-
-
+            }*/
 
             #region Army Units (combat city builder)
 

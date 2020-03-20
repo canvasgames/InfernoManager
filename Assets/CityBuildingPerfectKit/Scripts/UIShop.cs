@@ -31,8 +31,11 @@ namespace BE {
 		public	GameObject 	[]	contents;
         private	ShopType 		eType = ShopType.Normal;
 
+        private ShopDataManager shopDataManager;
+
 		void Awake () {
-			instance=this;
+            shopDataManager = new ShopDataManager();
+            instance =this;
 			gameObject.SetActive(false);
 		}
 		
@@ -114,22 +117,48 @@ namespace BE {
 			if(eType == ShopType.Normal) {
 				List<BuildingType> bt = new List<BuildingType>();
 
-				// fill first tab
-				bt.Clear ();
-                bt.Add(TBDatabase.GetBuildingType(15));
+                //Popula shop com base na planilha buildings_in_shop
+
+                bt.Clear();
+                foreach( BuildingShopData bsd in shopDataManager.getShopBuildingsByCategory(BuildingShopData.CATEGORY_PUNISH) )
+                    bt.Add(TBDatabase.GetBuildingType(bsd.buildingId));
+                
+                FillContents(0,"Punish", bt);
+                
+                bt.Clear();
+                foreach (BuildingShopData bsd in shopDataManager.getShopBuildingsByCategory(BuildingShopData.CATEGORY_DEVILS))
+                    bt.Add(TBDatabase.GetBuildingType(bsd.buildingId));
+
+                FillContents(1,"Resources", bt);
+                
+                bt.Clear();
+                foreach (BuildingShopData bsd in shopDataManager.getShopBuildingsByCategory(BuildingShopData.CATEGORY_RESEARCH))
+                    bt.Add(TBDatabase.GetBuildingType(bsd.buildingId));
+
+                FillContents(2,"Research", bt);
+
+                /******************************
                 bt.Add(TBDatabase.GetBuildingType(11));
                 bt.Add(TBDatabase.GetBuildingType(12));
                 bt.Add(TBDatabase.GetBuildingType(13));
                 bt.Add(TBDatabase.GetBuildingType(14));
                 bt.Add(TBDatabase.GetBuildingType(16));
                 bt.Add(TBDatabase.GetBuildingType(17));
-                FillContents(0, "Punish", bt);
+                
+                ********************************/
 
-				// fill second tab
-				bt.Clear ();
-                bt.Add(TBDatabase.GetBuildingType(3));
+
+                // fill second tab
+
+                //bt.Clear();
+                //bt.Add(TBDatabase.GetBuildingType(3));
+                /***********************
+				
+                
                 bt.Add(TBDatabase.GetBuildingType(23));
                 bt.Add(TBDatabase.GetBuildingType(22));
+                **********************/
+
                 //bt.Add(TBDatabase.GetBuildingType(24));
                 //bt.Add(TBDatabase.GetBuildingType(5));
                 // bt.Add(TBDatabase.GetBuildingType(6));
@@ -138,18 +167,23 @@ namespace BE {
                 //bt.Add (TBDatabase.GetBuildingType(8));
                 //bt.Add (TBDatabase.GetBuildingType(9));
                 //bt.Add (TBDatabase.GetBuildingType(10));
-                FillContents(1, "Resources", bt);
 
-				// fill third tab
-				bt.Clear ();
+                /**************
+                FillContents(1, "Resources", bt);
+                ***************/
+
+                // fill third tab
+                //bt.Clear();
+                /*******************
+                
                 bt.Add(TBDatabase.GetBuildingType(18));
                 bt.Add(TBDatabase.GetBuildingType(21));
                 bt.Add(TBDatabase.GetBuildingType(20));
                 bt.Add(TBDatabase.GetBuildingType(19));
-                
-                FillContents(2, "Research", bt);
+                *************************/
+                //FillContents(2, "Research", bt);
 
-				BETween.anchoredPosition(rtDialog.gameObject, 0.3f, new Vector3(0,-500), new Vector3(0,0)).method = BETweenMethod.easeOut;
+                BETween.anchoredPosition(rtDialog.gameObject, 0.3f, new Vector3(0,-500), new Vector3(0,0)).method = BETweenMethod.easeOut;
 			}
 			else if(eType == ShopType.InApp) {
 

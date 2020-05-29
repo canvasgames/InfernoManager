@@ -27,26 +27,15 @@ public class MenusController : MonoBehaviour {
     }
 
 
-    #region Awake/Start/Update
+    #region Awake
     void Awake()
     {
         s = this;
-    }
-
-    // Use this for initialization
-    void Start () {
-        ///createCatastrophe(0);   
-	}
-	
-	// Update is called once per frame
-	void Update () {
-
     }
     #endregion
 
     public void moveMenu(MovementTypes type, GameObject menu, string name, float newX, float newY, string dialogTextName = "", bool writeText = false, bool dont_screw_canvas = false, float delay = 0f)
     {
-
         if (delay == 0) {
             if (type == MovementTypes.Down)
                 enterFromDown(menu, name, newX, newY, dont_screw_canvas);
@@ -161,6 +150,7 @@ public class MenusController : MonoBehaviour {
     void enterFromLeft(GameObject menu, string name, float newX, float newY)
     {
         float xPos, yPos;
+        menu.SetActive(false);
         addToGUIAndRepositeObject(menu, name);
 
         //Use the passed position
@@ -182,10 +172,16 @@ public class MenusController : MonoBehaviour {
         {
             yPos = menu.transform.localPosition.y;
         }
-
         //Put out of the screen
         menu.transform.localPosition = new Vector3((xPos - Screen.width), yPos, 0f);
         //Move back to the screen and call punch at the end
+        StartCoroutine(ActivateMenu(xPos, menu));
+    }
+
+    IEnumerator ActivateMenu(float xPos, GameObject menu)
+    {
+        yield return new WaitForEndOfFrame();
+        menu.SetActive(true);
         menu.transform.DOLocalMoveX(xPos, 0.5f).OnComplete(() => punchLeft(menu));
     }
 
@@ -318,8 +314,6 @@ public class MenusController : MonoBehaviour {
             menu.transform.DOLocalMoveY(yPos, 0.5f).OnComplete(() => punchDown(menu));
         }
     }
-
-
 
     void punchDown(GameObject menu)
     {

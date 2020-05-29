@@ -87,17 +87,12 @@ public class TutorialController : MonoBehaviour
     #region Update and Timers
     // Update is called once per frame
     void Update() {
-       // if(atIntro == true)
-           // intro.SetActive(false);
 
-        if ( atIntro == true && Input.GetMouseButtonDown(0) ){
+        if (atIntro == true && Input.GetMouseButtonDown(0) ){
             atIntro = false;
             if (QA.s.NoSatanEntering == false && QA.s.NoTutorial == false) 
-                SatanController.s.start_entering(1.4f);
+                SatanController.s.StartSatanIntro(1.4f);
             intro.SetActive(false);
-
-
-            
         }
     }
     #endregion
@@ -117,18 +112,17 @@ public class TutorialController : MonoBehaviour
         Debug.Log("TUTORIAL PHASE 1");
         tempObject = (GameObject)Instantiate(Resources.Load("Prefabs/Welcome"));
         MenusController.s.moveMenu(MovementTypes.Up, tempObject, "Welcome", 0, 0);
-        Invoke("tutorial1EnterOtherStuff", 0.5f);
+        curSatan = SatanController.s.SatanIntro2;
+        curSatan.SetActive(true);
+        Invoke("tutorial1EnterOtherStuff", 0.4f);
        // */
     }
 
     public void tutorial1EnterOtherStuff()
     {
         tempObject = (GameObject)Instantiate(Resources.Load("Prefabs/SmallScroll"));
-        // MenusController.s.enterFromRight(tempObject, "SmallScroll", 0, 0);
         MenusController.s.moveMenu(MovementTypes.Left, tempObject, "SmallScroll", 0, 0);
-         //tempObject = (GameObject)Instantiate(Resources.Load("Prefabs/Satan"));
-        tempObject = (GameObject)Instantiate(Resources.Load("Prefabs/Satan/SatanProud"));
-        MenusController.s.moveMenu(MovementTypes.Right,tempObject, "Satan", 0, 0);
+
         Invoke("createNextButton", 2f);
     }
 
@@ -138,10 +132,9 @@ public class TutorialController : MonoBehaviour
         GLOBALS.s.TUTORIAL_PHASE = 101;
         MenusController.s.goOutDestroy("Welcome", null,"up");
 
-        MenusController.s.destroyMenu("Satan", null);
-        curSatan = (GameObject)Instantiate(Resources.Load("Prefabs/Satan/SatanOrderingg"));
-        MenusController.s.addToGUIAndRepositeObject(curSatan, "Satan");
-
+        curSatan.SetActive(false);
+        curSatan = SatanController.s.SatanExplaning;
+        curSatan.SetActive(true);
 
         fscreen = GameObject.FindObjectsOfType(typeof(DialogsTexts)) as DialogsTexts[];
         fscreen[0].closeAndReopen();
@@ -156,7 +149,7 @@ public class TutorialController : MonoBehaviour
     {
         GLOBALS.s.TUTORIAL_PHASE = 2;;
 
-        curSatan.GetComponent<Animator>().Rebind();
+        curSatan.GetComponentInChildren<Animator>().Rebind();
 
         fscreen = GameObject.FindObjectsOfType(typeof(DialogsTexts)) as DialogsTexts[];
         fscreen[0].closeAndReopen();
@@ -176,7 +169,7 @@ public class TutorialController : MonoBehaviour
     public void tutorial1Phase2Clicked()
     {
         GLOBALS.s.TUTORIAL_PHASE = 3;
-        curSatan.GetComponent<Animator>().Rebind();
+        curSatan.GetComponentInChildren<Animator>().Rebind();
 
         BE.SceneTown.instance.CapacityCheck();
         BE.SceneTown.Gold.ChangeDelta((double)300);
@@ -200,7 +193,7 @@ public class TutorialController : MonoBehaviour
     {
         Debug.Log("Tutorial phase 4: Tap to collect souls");
         GLOBALS.s.TUTORIAL_PHASE = 4;
-        curSatan.GetComponent<Animator>().Rebind();
+        curSatan.GetComponentInChildren<Animator>().Rebind();
 
         GLOBALS.s.LOCK_CLICK_TUTORIAL = false;
         fscreen = GameObject.FindObjectsOfType(typeof(DialogsTexts)) as DialogsTexts[];
@@ -239,9 +232,9 @@ public class TutorialController : MonoBehaviour
 
     void tutorial1Phase4ClickedPart2()
     {
-        MenusController.s.destroyMenu("Satan", null);
-        curSatan = (GameObject)Instantiate(Resources.Load("Prefabs/Satan/SatanBoasting"));
-        MenusController.s.addToGUIAndRepositeObject(curSatan, "Satan");
+        curSatan.SetActive(false);
+        curSatan = SatanController.s.SatanBragging;
+        curSatan.SetActive(true);
 
         HUD.SetActive(false);
         tempObject = (GameObject)Instantiate(Resources.Load("Prefabs/BigScrollQuestion"));
@@ -257,11 +250,9 @@ public class TutorialController : MonoBehaviour
         Debug.Log("[TUT] 6 - BLA BLA ");
         GLOBALS.s.TUTORIAL_PHASE = 6;
 
-        MenusController.s.destroyMenu("Satan", null);
-
-        curSatan = (GameObject)Instantiate(Resources.Load("Prefabs/Satan/SatanAngry"));
-        MenusController.s.addToGUIAndRepositeObject(curSatan, "Satan");
-
+        curSatan.SetActive(false);
+        curSatan = SatanController.s.SatanComplaining;
+        curSatan.SetActive(true);
 
         fscreen = GameObject.FindObjectsOfType(typeof(DialogsTexts)) as DialogsTexts[];
         fscreen[0].closeAndDestroy();
@@ -281,10 +272,9 @@ public class TutorialController : MonoBehaviour
 
         GLOBALS.s.TUTORIAL_PHASE = 7;
 
-        MenusController.s.destroyMenu("Satan", null);
-
-        curSatan = (GameObject)Instantiate(Resources.Load("Prefabs/Satan/SatanOrderingg"));
-        MenusController.s.addToGUIAndRepositeObject(curSatan, "Satan");
+        curSatan.SetActive(false);
+        curSatan = SatanController.s.SatanChallenging;
+        curSatan.SetActive(true);
 
         fscreen = GameObject.FindObjectsOfType(typeof(DialogsTexts)) as DialogsTexts[];
         fscreen[0].closeAndReopen();
@@ -302,13 +292,13 @@ public class TutorialController : MonoBehaviour
     {
         Debug.Log("[TUT] 8 SELECT A BUILDING");
         BE.SceneTown.instance.move_camera_to_building(new Vector3(13, 0, 1));
-   
+        curSatan.SetActive(false);
+
         GLOBALS.s.LOCK_CLICK_TUTORIAL = false;
         GLOBALS.s.LOCK_CAMERA_TUTORIAL = false;
         GLOBALS.s.TUTORIAL_PHASE = 8;
         fscreen = GameObject.FindObjectsOfType(typeof(DialogsTexts)) as DialogsTexts[];
         fscreen[0].closeAndReopen("m");
-        MenusController.s.destroyMenu("Satan", null);
         MenusController.s.destroyMenu("DownArrow", null);
         MenusController.s.repositeMenu("SmallScroll", null, 0f, 155f, 0.9F);
         //Invoke("createNextButton", 2);
@@ -366,8 +356,6 @@ public class TutorialController : MonoBehaviour
     }
     #endregion
 
- 
-
     #region Tutorial Phase 11 Collect Souls Again
     //Indicate to collect souls again
     public void collectSoulsAgain()
@@ -380,8 +368,8 @@ public class TutorialController : MonoBehaviour
         MenusController.s.destroyMenu("3DArrow", null);
         MenusController.s.destroyMenu("GreenCircle", null);
 
-        curSatan = (GameObject)Instantiate(Resources.Load("Prefabs/Satan/SatanOrderingg"));
-        MenusController.s.moveMenu(MovementTypes.Right, curSatan, "Satan", 0, 0);
+        curSatan = SatanController.s.SatanExplaning;
+        curSatan.SetActive(true);
 
         fscreen = GameObject.FindObjectsOfType(typeof(DialogsTexts)) as DialogsTexts[];
         fscreen[0].closeAndReopen();
@@ -403,7 +391,6 @@ public class TutorialController : MonoBehaviour
     {
         GLOBALS.s.TUTORIAL_PHASE = 11;
         MenusController.s.destroyMenu("SmallScroll", null);
-        MenusController.s.destroyMenu("Satan", null);
 
         GLOBALS.s.LOCK_CLICK_TUTORIAL = true;
        
@@ -435,8 +422,9 @@ public class TutorialController : MonoBehaviour
         MenusController.s.destroyMenu("ArowNext", null);
         GLOBALS.s.TUTORIAL_PHASE = 12;
 
-        curSatan = (GameObject)Instantiate(Resources.Load("Prefabs/Satan/SatanAngryLeft"));
-        MenusController.s.moveMenu(MovementTypes.Right, curSatan, "Satan", 0, 0);
+        curSatan.SetActive(false);
+        curSatan = SatanController.s.SatanComplaining;
+        curSatan.SetActive(true);
 
         tempObject = (GameObject)Instantiate(Resources.Load("Prefabs/BigScroll"));
         MenusController.s.moveMenu(MovementTypes.Left, tempObject, "BigScroll", 0, 0);
@@ -452,9 +440,9 @@ public class TutorialController : MonoBehaviour
         GLOBALS.s.TUTORIAL_PHASE = 25;
         MenusController.s.destroyMenu("BigScroll", null);
 
-        MenusController.s.destroyMenu("Satan", null);
-        curSatan = (GameObject)Instantiate(Resources.Load("Prefabs/Satan/SatanOrderingg"));
-        MenusController.s.addToGUIAndRepositeObject(curSatan, "Satan");
+        curSatan.SetActive(false);
+        curSatan = SatanController.s.SatanChallenging;
+        curSatan.SetActive(true);
 
         tempObject = (GameObject)Instantiate(Resources.Load("Prefabs/SmallScroll"));
         MenusController.s.moveMenu(MovementTypes.Right, tempObject, "SmallScroll", -223f, 126f);
@@ -472,7 +460,7 @@ public class TutorialController : MonoBehaviour
     public void showRankList()
     {
         GLOBALS.s.TUTORIAL_PHASE = 13;
-        MenusController.s.destroyMenu("Satan", null);
+        curSatan.SetActive(false);
         MenusController.s.destroyMenu("SmallScroll", null);
         MenusController.s.destroyMenu("SatanHand", null);
 
@@ -480,7 +468,6 @@ public class TutorialController : MonoBehaviour
         MenusController.s.moveMenu(MovementTypes.Left, tempObject, "DemonList", 0, 0);
 
         Invoke("autoMoveList", 2);
-
     }
 
 
@@ -561,8 +548,9 @@ public class TutorialController : MonoBehaviour
         tempObject = (GameObject)Instantiate(Resources.Load("Prefabs/SmallScroll4Lines"));
         MenusController.s.moveMenu(MovementTypes.Right, tempObject, "SmallScroll4Lines", 0, 0);
 
-        curSatan = (GameObject)Instantiate(Resources.Load("Prefabs/Satan/SatanProud"));
-        MenusController.s.moveMenu(MovementTypes.Right, curSatan, "Satan", 0, 0);
+        curSatan.SetActive(false);
+        curSatan = SatanController.s.SatanChallenging;
+        curSatan.SetActive(true);
 
         Invoke("createNextButton", 2);
     }
@@ -584,19 +572,15 @@ public class TutorialController : MonoBehaviour
         MenusController.s.moveMenu(MovementTypes.Right, tempObject, "SmallScroll", 252, 120);
         fscreen = GameObject.FindObjectsOfType(typeof(DialogsTexts)) as DialogsTexts[];
         fscreen[0].closeAndReopen();
-        //tempObject = (GameObject)Instantiate(Resources.Load("Prefabs/Satan"));
-        //MenusController.s.moveMenu(MovementTypes.Left, tempObject, "Satan", 0, 0);
 
         tempObject = (GameObject)Instantiate(Resources.Load("Prefabs/DownArrow"));
         MenusController.s.moveMenu(MovementTypes.Right, tempObject, "DownArrow", 0, 0);
 
         //curSatan.GetComponent<Animator>().Rebind();
 
-        MenusController.s.destroyMenu("Satan", null);
-        curSatan = (GameObject)Instantiate(Resources.Load("Prefabs/Satan/SatanOrderingg"));
-        MenusController.s.addToGUIAndRepositeObject(curSatan, "Satan");
-
-
+        curSatan.SetActive(false);
+        curSatan = SatanController.s.SatanExplaning;
+        curSatan.SetActive(true);
     }
     #endregion
 
@@ -605,7 +589,7 @@ public class TutorialController : MonoBehaviour
     public void indicateTabFireMine()
     {
         BE.SceneTown.instance.move_camera_to_building(new Vector3(16, 0, 12),0.5f,14f);
-        MenusController.s.destroyMenu("Satan", null);
+        curSatan.SetActive(false);
 
         MenusController.s.repositeMenu("SmallScroll", null, 0f, 155f, 0.9F);
         MenusController.s.repositeMenu("DownArrow", null, -190f, -215f);
@@ -676,8 +660,9 @@ public class TutorialController : MonoBehaviour
         tempObject = (GameObject)Instantiate(Resources.Load("Prefabs/BigScroll"));
         MenusController.s.moveMenu(MovementTypes.Left, tempObject, "BigScroll", 0, 0);
 
-        curSatan = (GameObject)Instantiate(Resources.Load("Prefabs/Satan/SatanOrderingg"));
-        MenusController.s.moveMenu(MovementTypes.Right, curSatan, "Satan", 0, 0);
+        curSatan.SetActive(false);
+        curSatan = SatanController.s.SatanExplaning;
+        curSatan.SetActive(true);
 
         buildings = GameObject.FindObjectsOfType(typeof(BE.Building)) as BE.Building[];
         foreach (BE.Building element in buildings)
@@ -698,7 +683,6 @@ public class TutorialController : MonoBehaviour
         fscreen = GameObject.FindObjectsOfType(typeof(DialogsTexts)) as DialogsTexts[];
         fscreen[0].closeAndReopen();
 
-        MenusController.s.destroyMenu("Satan", null);
         curSatan = (GameObject)Instantiate(Resources.Load("Prefabs/Satan/SatanProud"));
         MenusController.s.addToGUIAndRepositeObject(curSatan, "Satan");
 

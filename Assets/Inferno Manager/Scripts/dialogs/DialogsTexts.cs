@@ -11,6 +11,7 @@ public class DialogsTexts : MonoBehaviour
     
     public ScrollType myScrollType = ScrollType.smallScroll;
     public GameObject upPart, downPart, myText;
+    RectTransform myTextRect, myRect;
     float xPos, myTextHeight;
     string text_displaying = "";
     string text_final = "";
@@ -24,7 +25,9 @@ public class DialogsTexts : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        myTextHeight = myText.GetComponent<RectTransform>().rect.height;
+        myTextRect = myText.GetComponent<RectTransform>();
+        myTextHeight = myTextRect.rect.height;
+        myRect = GetComponent<RectTransform>();
         transform.localScale = new Vector3(1, 0, 1);
         ChangeTextFormat("l");
         Invoke("open", 0.3f);
@@ -34,8 +37,8 @@ public class DialogsTexts : MonoBehaviour
     void Update()
     {
         upPart.transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y , transform.localPosition.z);
-        downPart.transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - (GetComponent<RectTransform>().rect.height * transform.localScale.y), transform.localPosition.z);
-        myText.GetComponent<RectTransform>().sizeDelta = new Vector2 (myText.GetComponent<RectTransform>().sizeDelta.x, myTextHeight * transform.localScale.y);
+        downPart.transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y - (myRect.rect.height * transform.localScale.y), transform.localPosition.z);
+        myTextRect.sizeDelta = new Vector2 (myTextRect.sizeDelta.x, myTextHeight * transform.localScale.y);
     }
 
     public void open()
@@ -102,9 +105,8 @@ public class DialogsTexts : MonoBehaviour
             if (GLOBALS.s.TUTORIAL_PHASE == 1)
             {
                 Debug.Log("LOCAL POSITION: " + myText.GetComponentInChildren<Text>().transform.localPosition);
-                text_to_display = "That was quite an entrance,\nright?";
+                text_to_display = "That was quite  an entrance,\nright?";
                 ChangeTextFormat("l");
-
             }
 
             //text_to_display = "Hi, I'm Satan!  \n You've been promoted to DEMON LORD!";

@@ -3,10 +3,7 @@ using System.Collections;
 
 public class SatanStartedTalking : StateMachineBehaviour {
 
-	 void OnStateEnter()
-    {
-        SatanController.s.satan_started_talking();
-    }
+
 	//override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) {
 	//
 	//}

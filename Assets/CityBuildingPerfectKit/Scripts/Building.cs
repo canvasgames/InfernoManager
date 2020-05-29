@@ -752,11 +752,13 @@ namespace BE
         // do complete and return true
         public bool HasCompletedWork()
         {
+            Debug.Log(UpgradeCompleted);
 
             if (UpgradeCompleted) { UpgradeEnd(); return true; }
 
             if (Collectable)
             {
+                Debug.Log(Collectable);
                 Collect();
                 defineCapacityTotalAndAllProduction();
                 if (AllProduction < CapacityTotal || GLOBALS.s.TUTORIAL_PHASE == 4)

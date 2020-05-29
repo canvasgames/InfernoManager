@@ -10,107 +10,47 @@ public class SatanController : MonoBehaviour {
     private GameObject Satan;
     private GameObject CatExplosion;
 
-    GameObject FireBg;
+    public Text introText;
+
+    [Header("SatanStates")]
+    public GameObject SatanIntro;
+    public GameObject SatanIntro2;
+    public GameObject SatanChallenging;
+    public GameObject SatanExplaning;
+    public GameObject SatanBragging;
+    public GameObject SatanComplaining;
 
     void Awake() { s = this; }
-	// Use this for initialization
-	void Start () {
 
-        //Invoke("satan_entering_animation", 1f);
-
-        Satan = (GameObject)Instantiate(Resources.Load("Prefabs/Satan/SatanEntering"));
-        Satan.transform.SetParent(Canvas, false);
-        Satan.SetActive(false);
-
-        //CatExplosion = (GameObject)Instantiate(Resources.Load("Prefabs/CatastropheExplosion"));
-        //CatExplosion.transform.SetParent(Canvas, false);
-
-        
-    }
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-    public void start_entering(float delay)
+    public void StartSatanIntro(float delay)
     {
-        Invoke("satan_entering_animation", delay);
+        Invoke("IntroAnimation", delay);
     }
 
-    public void satan_entering_animation()
+    void IntroAnimation()
     {
-        FireBg = (GameObject)Instantiate(Resources.Load("Prefabs/FireBg"));
-        FireBg.SetActive(false);
-        FireBg.transform.SetParent(Canvas, false);
-
-        Satan.SetActive(true);
-       
-
-        //Invoke("satan_finished_appearing", 1f);
+        SatanIntro.SetActive(true);
+        StartCoroutine(SatanStartedTalk());
     }
 
-    public void satan_started_talking()
+    IEnumerator SatanStartedTalk()
     {
-        TextWriter.s.write_text(Satan.GetComponentInChildren<Text>(), "Behold the Great Satan!!\nRuler of the 9 Hells!", 0.02f, 0.1f);
-        Invoke("satan_finished_talking", 2.3f);
-        //Satan.GetComponentInChildren<Text>().text = "Behold the Great Satan!!\nRuler of the 9 Hells!";
+        yield return new WaitForSeconds(1.5f);
+        TextWriter.s.write_text(introText, "Behold the Great Satan!!\nRuler of the 9 Hells!", 0.02f, 0.1f);
+        StartCoroutine(SatanFinishTalk());
     }
 
-    public void satan_finished_talking()
+    IEnumerator SatanFinishTalk()
     {
-        Debug.Log("FINISHED TALKING");
-        Satan.GetComponentInChildren<Text>().text = "";
+        yield return new WaitForSeconds(2.3f);
+        introText.text = "";
     }
-
-    /*
-    public void satan_finished_appearing()
-    {
-        //FireBg.SetActive(true);
-        //FireBg.GetComponent<CanvasGroup>().DOFade(0, 0.5f).OnComplete(() => fire_finished_fading());
-        //Satan.GetComponent<Animation>().Stop();
-        //Invoke("satan_back_to_cape", 0.4f);
-        
-     }
-
-    
-    public void satan_back_to_cape()
-    {
-        //Debug.Log(" ASASASASASASAS");
-        
-        //CatExplosion.SetActive(true);
-        //CatExplosion.transform.localPosition = new Vector2(0, 0);
-
-        //Satan.GetComponent<Animation>().Stop();
-        //Satan.GetComponent<CanvasGroup>().DOFade(0, 0.4f);
-        Satan.SetActive(false);
-        Invoke("explosion_finished", 0.4f);
-    }
-
-    public void explosion_finished()
-    {
-        //Satan.transform.localPosition = new Vector3(-236f, -129f, 0);
-        //Satan.transform.localScale = new Vector3(0.5f, 0.5f, 0);
-
-        Satan.SetActive(false);
-
-        CatExplosion.SetActive(false);
-    }
-
-
-
-    public void fire_finished_fading()
-    {
-        Satan.transform.DOLocalMove(new Vector3(-236f, -129f, 0), 0.5f);
-        Satan.transform.DOScale(new Vector3(0.5f, 0.6f, 0), 0.5f);
-    } 
-    */
 
 
     public void satan_vanished()
     {
         TutorialController.s.startTutorial();
         Destroy(Satan);
-
     }
 }

@@ -72,7 +72,6 @@ namespace BE {
             bool locked = false;
             int THRankReq = TBDatabase.TownHallLevelRequired(bt.ID, 0);
             //if (THRankReq > BEGround.instance.GetTownHallLevel())
-            Debug.Log(" sssssssssssssssss USER RANK: " + GLOBALS.s.USER_RANK);
             if (THRankReq > GLOBALS.s.USER_RANK)
             {
                 CountAvailable = false;

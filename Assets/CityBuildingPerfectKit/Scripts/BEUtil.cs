@@ -34,7 +34,6 @@ namespace BE {
 		
 		}
 
-		//유니티에서 계층구조 하위의 오브젝트 탐색이 코드가 길고 복잡하므로, 이 과정을 단축할 수 있는 유틸리티 함수들을 만들어서 사용한다.
 		//GmaeObject.Find("PanelMain").transform.Find("Top").transform.Find("Label") -> GetObject("PanelMain/Top/Label") 
 		public static GameObject GetObject(string path) { 
 			GameObject goTop = null;

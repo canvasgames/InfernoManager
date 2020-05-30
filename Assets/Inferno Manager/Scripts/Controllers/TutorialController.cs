@@ -87,11 +87,12 @@ public class TutorialController : MonoBehaviour
 
         if (atIntro == true && Input.GetMouseButtonDown(0) ){
             atIntro = false;
-            if (QA.s.NoSatanEntering == false && QA.s.NoTutorial == false) 
+            if (QA.s.NoSatanEntering == false && QA.s.NoTutorial == false)
                 SatanController.s.StartSatanIntro(1.4f);
             else if (QA.s.NoSatanEntering == true && QA.s.NoTutorial == false)
                 StartTutorial();
-
+        
+            HUD.SetActive(true);
             intro.SetActive(false);
         }
     }

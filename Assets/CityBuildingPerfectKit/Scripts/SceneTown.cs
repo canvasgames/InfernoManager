@@ -343,7 +343,7 @@ namespace BE {
                             // else camera panning
                             else {
                                 Vector3 vDelta = (Input.mousePosition - mousePosOld) * cameraSpeed ;
-                                Debug.Log(" MOUSE POSITION: " + Input.mousePosition + "  OLD: " + mousePosOld + "  CCC CAM POS: " + goCamera.transform.localPosition);
+                                //Debug.Log(" MOUSE POSITION: " + Input.mousePosition + "  OLD: " + mousePosOld + "  CCC CAM POS: " + goCamera.transform.localPosition);
                                 //Debug.Log(" BG " + goCamera.GetComponent<Camera>().WorldToScreenPoint(bg.transform.localPosition));
 
                                 //goCamera.transform.position = vCamPosOld - vDelta;

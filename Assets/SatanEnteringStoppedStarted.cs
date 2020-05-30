@@ -5,7 +5,6 @@ public class SatanEnteringStoppedStarted : StateMachineBehaviour {
 
     void OnStateExit()
     {
-        SatanController.s.satan_vanished();
         //AnimatorStateInfo a;
         //a.
     }

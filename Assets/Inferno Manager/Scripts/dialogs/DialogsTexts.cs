@@ -83,7 +83,6 @@ public class DialogsTexts : MonoBehaviour
             }
             else if (state == "l") {
                 if (myScrollType == ScrollType.smallScroll) {
-                    Debug.Log("CHANGING TEXT STATE TO LEFT");
                     myText.GetComponentInChildren<Text>().alignment = TextAnchor.UpperLeft;
                     myText.GetComponentInChildren<Text>().transform.localPosition += upperLeftPos;
                 }
@@ -98,7 +97,6 @@ public class DialogsTexts : MonoBehaviour
     public void changeText(string dialogName = "", bool writeText = false)
     {
         string text_to_display = "";
-        Debug.Log("CHANGE TEXT CALLED");
         //Debug.Log(dialogName);
         if(dialogName == "")
         {

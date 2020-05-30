@@ -54,13 +54,10 @@ public class TutorialController : MonoBehaviour
 
             if(QA.s.NoSatanEntering == false)
             {
-                //SatanController.s.start_entering(1.4f);
-
                 GLOBALS.s.TUTORIAL_PHASE =  -999;
             }
             else
             {
-                startTutorial();
                 // clickRankHUD();
             }
 			
@@ -92,6 +89,9 @@ public class TutorialController : MonoBehaviour
             atIntro = false;
             if (QA.s.NoSatanEntering == false && QA.s.NoTutorial == false) 
                 SatanController.s.StartSatanIntro(1.4f);
+            else if (QA.s.NoSatanEntering == true && QA.s.NoTutorial == false)
+                StartTutorial();
+
             intro.SetActive(false);
         }
     }
@@ -99,7 +99,7 @@ public class TutorialController : MonoBehaviour
 
     #region Tutorial Phase 1 Welcome
 
-    public void startTutorial()
+    public void StartTutorial()
     {
         Invoke("tutorial1", 1f);
     }
@@ -507,7 +507,8 @@ public class TutorialController : MonoBehaviour
 
         tempObject = (GameObject)Instantiate(Resources.Load("Prefabs/SmallScroll"));
         MenusController.s.moveMenu(MovementTypes.Left, tempObject, "SmallScroll", -403, -328);
-        MenusController.s.repositeMenu("SmallScroll", null,-403, -328,0.8f);
+        //MenusController.s.repositeMenu("SmallScroll", null,-403, -328,0.8f);
+        tempObject.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         Invoke("createNextButton", 2);
     }
 

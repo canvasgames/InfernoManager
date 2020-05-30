@@ -32,6 +32,7 @@ public class SatanController : MonoBehaviour {
     {
         SatanIntro.SetActive(true);
         StartCoroutine(SatanStartedTalk());
+        introText.gameObject.SetActive(true);
     }
 
     IEnumerator SatanStartedTalk()
@@ -45,12 +46,6 @@ public class SatanController : MonoBehaviour {
     {
         yield return new WaitForSeconds(2.3f);
         introText.text = "";
-    }
-
-
-    public void satan_vanished()
-    {
-        TutorialController.s.startTutorial();
-        Destroy(Satan);
+        introText.gameObject.SetActive(false);
     }
 }

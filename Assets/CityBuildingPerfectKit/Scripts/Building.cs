@@ -303,8 +303,8 @@ namespace BE
             if (type == Type)
             {
                 uiInfo.SatanHand.gameObject.SetActive(true);
-                Vector3 pos = new Vector3(goCenter.transform.position.x + 1.5f, 0f, goCenter.transform.position.z + 1.5f);
-				if (!hell_gate) SceneTown.instance.move_camera_to_building(pos, 0.5f, 11);
+                Vector3 pos = new Vector3(goCenter.transform.position.x + 1.5f, 5f, goCenter.transform.position.z + 1.5f);
+				if (!hell_gate) SceneTown.instance.move_camera_to_building(pos, 0.5f, 8);
 				else SceneTown.instance.move_camera_to_building(pos, 0.5f, 11, -6f, -6f);
             }
 
@@ -1282,7 +1282,7 @@ namespace BE
             }
             else if (GLOBALS.s.TUTORIAL_PHASE == 16)
             {
-                TutorialController.s.collectDemonsPhase();
+                TutorialController.s.CollectFirePhase();
             }
             // initialize with next level
             Init(Type, Level + 1);

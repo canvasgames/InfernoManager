@@ -92,7 +92,6 @@ public class TutorialController : MonoBehaviour
             else if (QA.s.NoSatanEntering == true && QA.s.NoTutorial == false)
                 StartTutorial();
         
-            HUD.SetActive(true);
             intro.SetActive(false);
         }
     }
@@ -292,7 +291,7 @@ public class TutorialController : MonoBehaviour
     public void clickedBuildBt()
     {
         Debug.Log("[TUT] 8 SELECT A BUILDING");
-        BE.SceneTown.instance.move_camera_to_building(new Vector3(13, 0, 1));
+        BE.SceneTown.instance.move_camera_to_building(new Vector3(13, 3, 1),0.5f,10);
         curSatan.SetActive(false);
 
         GLOBALS.s.LOCK_CLICK_TUTORIAL = false;
@@ -630,7 +629,7 @@ public class TutorialController : MonoBehaviour
 
     #region Tutorial Phase 17 Collect Fire
     //Collect fire
-    public void collectDemonsPhase()
+    public void CollectFirePhase()
     {
         GLOBALS.s.LOCK_CAMERA_TUTORIAL = true;
         GLOBALS.s.TUTORIAL_PHASE = 17;
@@ -638,7 +637,7 @@ public class TutorialController : MonoBehaviour
         MenusController.s.moveMenu(MovementTypes.Right, tempObject, "SmallScroll", -18f, -302f);
 
 
-        buildings = GameObject.FindObjectsOfType(typeof(BE.Building)) as BE.Building[];
+        buildings = FindObjectsOfType(typeof(BE.Building)) as BE.Building[];
         foreach (BE.Building element in buildings)
         {
             element.activateHandTutorialUI(3);
@@ -685,8 +684,9 @@ public class TutorialController : MonoBehaviour
         fscreen = GameObject.FindObjectsOfType(typeof(DialogsTexts)) as DialogsTexts[];
         fscreen[0].closeAndReopen();
 
-        curSatan = (GameObject)Instantiate(Resources.Load("Prefabs/Satan/SatanProud"));
-        MenusController.s.addToGUIAndRepositeObject(curSatan, "Satan");
+        curSatan.SetActive(false);
+        curSatan = SatanController.s.SatanExplaning;
+        curSatan.SetActive(true);
 
         Invoke("createNextButton", 1);
     }
@@ -703,10 +703,7 @@ public class TutorialController : MonoBehaviour
         GLOBALS.s.TUTORIAL_PHASE = 0;
         GLOBALS.s.TUTORIAL_OCCURING = false;
 
-        Satan_HUD[] satanzito;
-        satanzito = GameObject.FindObjectsOfType(typeof(Satan_HUD)) as Satan_HUD[];
-        satanzito[0].moveSatan();
-
+        curSatan.GetComponent<Satan_HUD>().moveSatan();
         MenusController.s.goOutDestroy("BigScroll", null,"right");
 
         // PlayerPrefs.SetInt("firstGame", 1);

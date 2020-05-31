@@ -26,32 +26,34 @@ using UnityEngine.SceneManagement;
 ///-----------------------------------------------------------------------------------------
 /// 
 #endregion
-namespace BE {
+namespace BE
+{
 
     #region Variables Declaration
-    public class SceneTown : MonoBehaviour {
+    public class SceneTown : MonoBehaviour
+    {
 
-		public	static SceneTown instance;
+        public static SceneTown instance;
 
         public GameObject bg;
         public GameObject camPos;
 
-        public  Text		textLevel;
+        public Text textLevel;
         public float minDistSlide = 0.01f;
 
-		private bool 		bInTouch = false;
-		private float 		ClickAfter = 0.0f;
-		private bool 		bTemporarySelect = false;
-		private Vector3		vCamRootPosOld = Vector3.zero;
-		private Vector3		vCamPosOld = Vector3.zero;
-        private Vector3		mousePosOld = Vector3.zero;
-		private Vector3		mousePosLast = Vector3.zero;
-		public 	GameObject 	goCamera=null;
-		public 	GameObject 	goCameraRoot=null;
-		public	bool 		camPanningUse = true;
-		public 	BEGround 	ground=null;
-		private	bool 		Dragged = false;
-        private bool        cameraStopping = false;
+        private bool bInTouch = false;
+        private float ClickAfter = 0.0f;
+        private bool bTemporarySelect = false;
+        private Vector3 vCamRootPosOld = Vector3.zero;
+        private Vector3 vCamPosOld = Vector3.zero;
+        private Vector3 mousePosOld = Vector3.zero;
+        private Vector3 mousePosLast = Vector3.zero;
+        public GameObject goCamera = null;
+        public GameObject goCameraRoot = null;
+        public bool camPanningUse = true;
+        public BEGround ground = null;
+        private bool Dragged = false;
+        private bool cameraStopping = false;
 
         public float cameraStopSpeed = 0.5f;
         public float cameraSpeed = 0.05f;
@@ -73,35 +75,35 @@ namespace BE {
 
         private float perspectiveZoomSpeed = 0.3f;
         //public	float 		perspectiveZoomSpeed = 0.0001f;	// The rate of change of the field of view in perspective mode.
-		public	float 		orthoZoomSpeed = 1f;   		// The rate of change of the orthographic size in orthographic mode.
+        public float orthoZoomSpeed = 1f;           // The rate of change of the orthographic size in orthographic mode.
 
-		[HideInInspector]
-		public	Plane 		xzPlane;
+        [HideInInspector]
+        public Plane xzPlane;
 
 
-		// when game started, camera zoomin 
-		private bool			InFade = true;
-		private float			FadeAge = 0.0f;
+        // when game started, camera zoomin 
+        private bool InFade = true;
+        private float FadeAge = 0.0f;
 
-		private Building		MouseClickedBuilding = null;
-		private Text			HouseInfo = null;
+        private Building MouseClickedBuilding = null;
+        private Text HouseInfo = null;
 
-		public	static 	bool 		isModalShow = false;
-		public  static 	Building 	buildingSelected = null;
+        public static bool isModalShow = false;
+        public static Building buildingSelected = null;
 
         // TBDRESOURCES create new resources here
-		public  static 	BENumber	Exp;
-		public  static 	BENumber	Gold;
-		public  static 	BENumber	Elixir;
-		public  static 	BENumber	Gem;
-		public  static 	BENumber	Shield;
-        public  static  BENumber    MaxElixir;
+        public static BENumber Exp;
+        public static BENumber Gold;
+        public static BENumber Elixir;
+        public static BENumber Gem;
+        public static BENumber Shield;
+        public static BENumber MaxElixir;
 
         public static BENumber Sulfur;
         public static BENumber Evilness;
 
-        private static 	int 		Level = 0;
-		private static 	int 		ExpTotal = 0;
+        private static int Level = 0;
+        private static int ExpTotal = 0;
 
         //MINE RESOURCES
         public static int SoulProductionIncTotal = 0;
@@ -112,24 +114,25 @@ namespace BE {
         #endregion
 
         #region Init Everything
-        void Awake () {
-			instance=this;
+        void Awake()
+        {
+            instance = this;
 
-			// initialize BENumber class and set ui element 
-			Exp = new BENumber(BENumber.IncType.VALUE, 0, 100000000, 0);
-			Exp.AddUIImage(BEUtil.GetObject("PanelOverlay/LabelElixir/LabelExp/Fill").GetComponent<Image>());
-			Exp.AddUIImageMax(BEUtil.GetObject("PanelOverlay/LabelElixir/LabelExp/FillLimit").GetComponent<Image>());
+            // initialize BENumber class and set ui element 
+            Exp = new BENumber(BENumber.IncType.VALUE, 0, 100000000, 0);
+            Exp.AddUIImage(BEUtil.GetObject("PanelOverlay/LabelElixir/LabelExp/Fill").GetComponent<Image>());
+            Exp.AddUIImageMax(BEUtil.GetObject("PanelOverlay/LabelElixir/LabelExp/FillLimit").GetComponent<Image>());
 
-			Gold = new BENumber(BENumber.IncType.VALUE, 0, 200000, 100); // initial gold count is 1000
-			Gold.AddUIText(BEUtil.GetObject("PanelOverlay/LabelGold/Text").GetComponent<Text>());
+            Gold = new BENumber(BENumber.IncType.VALUE, 0, 200000, 100); // initial gold count is 1000
+            Gold.AddUIText(BEUtil.GetObject("PanelOverlay/LabelGold/Text").GetComponent<Text>());
             Gold.AddUITextMax(BEUtil.GetObject("PanelOverlay/LabelGold/TextMax").GetComponent<Text>());
             Gold.AddUIImage(BEUtil.GetObject("PanelOverlay/LabelGold/Fill").GetComponent<Image>());
 
 
-			Elixir = new BENumber(BENumber.IncType.VALUE, 0, 300000, 0, PayType.Elixir); // initial elixir count is 1000	
-			Elixir.AddUIText(BEUtil.GetObject("PanelOverlay/LabelElixir/Text").GetComponent<Text>());
-			Elixir.AddUITextMax(BEUtil.GetObject("PanelOverlay/LabelElixir/TextMax").GetComponent<Text>());
-		    Elixir.AddUIImage(BEUtil.GetObject("PanelOverlay/LabelElixir/Fill").GetComponent<Image>());
+            Elixir = new BENumber(BENumber.IncType.VALUE, 0, 300000, 0, PayType.Elixir); // initial elixir count is 1000	
+            Elixir.AddUIText(BEUtil.GetObject("PanelOverlay/LabelElixir/Text").GetComponent<Text>());
+            Elixir.AddUITextMax(BEUtil.GetObject("PanelOverlay/LabelElixir/TextMax").GetComponent<Text>());
+            Elixir.AddUIImage(BEUtil.GetObject("PanelOverlay/LabelElixir/Fill").GetComponent<Image>());
 
             //-----------
 
@@ -147,90 +150,96 @@ namespace BE {
 
             //------------
 
-            Gem = new BENumber(BENumber.IncType.VALUE, 0, 100000000, 50);	// initial gem count is 100	0	
-			Gem.AddUIText(BEUtil.GetObject("PanelOverlay/LabelGem/Text").GetComponent<Text>());
+            Gem = new BENumber(BENumber.IncType.VALUE, 0, 100000000, 50);   // initial gem count is 100	0	
+            Gem.AddUIText(BEUtil.GetObject("PanelOverlay/LabelGem/Text").GetComponent<Text>());
 
             //TBDCURRENCIES SET THEIR VALUE HERE
 
-			HouseInfo = BEUtil.GetObject("PanelOverlay/LabelHouse/Text").GetComponent<Text>();
+            HouseInfo = BEUtil.GetObject("PanelOverlay/LabelHouse/Text").GetComponent<Text>();
 
-			Shield = new BENumber(BENumber.IncType.TIME, 0, 100000000, 0);			
-			Shield.AddUIText(BEUtil.GetObject("PanelOverlay/LabelShield/Text").GetComponent<Text>());
+            Shield = new BENumber(BENumber.IncType.TIME, 0, 100000000, 0);
+            Shield.AddUIText(BEUtil.GetObject("PanelOverlay/LabelShield/Text").GetComponent<Text>());
 
             // For camera fade animation, set cameras initial positions
-            goCameraRoot.transform.position = new Vector3(-5.5f,0, 1);
-            goCamera.transform.localPosition = new Vector3(0,0,-128.0f);
+            goCameraRoot.transform.position = new Vector3(-5.5f, 0, 1);
+            goCamera.transform.localPosition = new Vector3(0, 0, -128.0f);
             InFade = true;
-			FadeAge = 0.0f;
-		}
+            FadeAge = 0.0f;
+        }
 
-		void Start () {
-            
+        void Start()
+        {
+
             Time.timeScale = 1;
-			isModalShow = false;
-			xzPlane = new Plane(new Vector3(0f, 1f, 0f), 0f);
+            isModalShow = false;
+            xzPlane = new Plane(new Vector3(0f, 1f, 0f), 0f);
 
-			// load game data from xml file
-			Load ();
-            
+            // load game data from xml file
+            Load();
+
             //FIRST TIME USER if user new to this game add initial building
-            if (bFirstRun) {
+            if (bFirstRun)
+            {
 
-            /*    
-				// add town hall 
-				{
-					Building script = BEGround.instance.BuildingAdd (0,1);
-					script.Move(Vector3.zero);
-					BuildingSelect(script);
-					BuildingLandUnselect();
-				}
-				// add hut
-				{
-					Building script = BEGround.instance.BuildingAdd (4,1);
-					script.Move(new Vector3(4,0,0));
-					BuildingSelect(script);
-					BuildingLandUnselect();
-				}*/
-			}
+                /*    
+                    // add town hall 
+                    {
+                        Building script = BEGround.instance.BuildingAdd (0,1);
+                        script.Move(Vector3.zero);
+                        BuildingSelect(script);
+                        BuildingLandUnselect();
+                    }
+                    // add hut
+                    {
+                        Building script = BEGround.instance.BuildingAdd (4,1);
+                        script.Move(new Vector3(4,0,0));
+                        BuildingSelect(script);
+                        BuildingLandUnselect();
+                    }*/
+            }
 
-			GainExp(0); // call this once to calculate level
+            GainExp(0); // call this once to calculate level
 
-			//set resource's capacity
-			CapacityCheck();
+            //set resource's capacity
+            CapacityCheck();
 
-			// create workers by hut count
-			int HutCount = BEGround.instance.GetBuildingCount(1);
-			BEWorkerManager.instance.CreateWorker(HutCount);
-			BEGround.instance.SetWorkingBuildingWorker();
-		}
+            // create workers by hut count
+            int HutCount = BEGround.instance.GetBuildingCount(1);
+            BEWorkerManager.instance.CreateWorker(HutCount);
+            BEGround.instance.SetWorkingBuildingWorker();
+        }
 
         #endregion
 
-        public void OnValueChanged (float a) {
+        public void OnValueChanged(float a)
+        {
             minDistSlide = a;
         }
 
         // result of quit messagebox
-        public void MessageBoxResult(int result) {
-			BEAudioManager.SoundPlay(6);
-			if(result == 0) {
-				#if UNITY_EDITOR
-				UnityEditor.EditorApplication.isPlaying = false;
-				#else
+        public void MessageBoxResult(int result)
+        {
+            BEAudioManager.SoundPlay(6);
+            if (result == 0)
+            {
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#else
 				Application.Quit();
-				#endif
-			}
-		}
+#endif
+            }
+        }
 
         #region UPDATE that handles Camera and building placement
-        void Update() {
+        void Update()
+        {
             #region Update GUI values
             // get delta time from BETime
             float deltaTime = BETime.deltaTime;
 
             // if user pressed escape key, show quit messagebox
             //if (!UIDialogMessage.IsShow("get keydown scape") && !isModalShow && Input.GetKeyDown(KeyCode.Escape)) {
-              //  UIDialogMessage.Show("Do you want to quit this program?", "Yes,No", "Quit?", null, (result) => { MessageBoxResult(result); });
+            //  UIDialogMessage.Show("Do you want to quit this program?", "Yes,No", "Quit?", null, (result) => { MessageBoxResult(result); });
             //}
 
             // if in camera animation 
@@ -264,16 +273,20 @@ namespace BE {
             //if(EventSystem.current.IsPointerOverGameObject()) return;
 
             #endregion
-            if (!GLOBALS.s.SPANKING_OCURRING) { 
+            if (!GLOBALS.s.SPANKING_OCURRING)
+            {
                 #region Camera Movement on Mouse button down
-                if (Input.GetMouseButton(0)) {
-                    
-                    if (EventSystem.current.IsPointerOverGameObject() || GLOBALS.s.LOCK_CAMERA_TUTORIAL == true && GLOBALS.s.LOCK_CLICK_TUTORIAL == true || (GLOBALS.s.DIALOG_ALREADY_OPENED == true && GLOBALS.s.TUTORIAL_OCCURING == false)) {
-                        return;        
+                if (Input.GetMouseButton(0))
+                {
+
+                    if (EventSystem.current.IsPointerOverGameObject() || GLOBALS.s.LOCK_CAMERA_TUTORIAL == true && GLOBALS.s.LOCK_CLICK_TUTORIAL == true || (GLOBALS.s.DIALOG_ALREADY_OPENED == true && GLOBALS.s.TUTORIAL_OCCURING == false))
+                    {
+                        return;
                     }
 
                     //Click MouseButton
-                    if (!bInTouch && GLOBALS.s.LOCK_CLICK_TUTORIAL == false) {
+                    if (!bInTouch && GLOBALS.s.LOCK_CLICK_TUTORIAL == false)
+                    {
                         bInTouch = true;
                         ClickAfter = 0.0f;
                         bTemporarySelect = false;
@@ -291,10 +304,12 @@ namespace BE {
                         //if not do not move selected building
                         Ray ray = Camera.main.ScreenPointToRay(mousePosOld);
                         RaycastHit hit;
-                        if (Physics.Raycast(ray, out hit) && (hit.collider.gameObject.tag == "Building")) {
+                        if (Physics.Raycast(ray, out hit) && (hit.collider.gameObject.tag == "Building"))
+                        {
                             MouseClickedBuilding = BuildingFromObject(hit.collider.gameObject);
                         }
-                        else {
+                        else
+                        {
                             MouseClickedBuilding = null;
                         }
 
@@ -304,19 +319,23 @@ namespace BE {
                     #endregion
 
                     #region Camera Movement holding button
-                    else if(GLOBALS.s.LOCK_CAMERA_TUTORIAL == false) {
+                    else if (GLOBALS.s.LOCK_CAMERA_TUTORIAL == false)
+                    {
                         //Mouse Button is in pressed 
                         //if mouse move certain diatance
                         float mDist = Vector3.Distance(Input.mousePosition, mousePosLast);
                         if (((mDist > 0.01f && !Application.isMobilePlatform) || (mDist > 3.5f && Application.isMobilePlatform)) && mDist < 150f
-                            ) {
-                        //if ( mDist > minDistSlide && mDist < 100f) {
-                                // set drag flag on
-                                if (!Dragged) {
+                            )
+                        {
+                            //if ( mDist > minDistSlide && mDist < 100f) {
+                            // set drag flag on
+                            if (!Dragged)
+                            {
                                 Dragged = true;
 
                                 // show tile grid
-                                if ((buildingSelected != null) && (MouseClickedBuilding == buildingSelected) && buildingSelected.Type != 0 && buildingSelected.Type != 4) {
+                                if ((buildingSelected != null) && (MouseClickedBuilding == buildingSelected) && buildingSelected.Type != 0 && buildingSelected.Type != 4)
+                                {
                                     BETween.alpha(ground.gameObject, 0.1f, 0.0f, 0.3f);
                                     //Debug.Log ("ground alpha to 0.1");
                                 }
@@ -331,7 +350,8 @@ namespace BE {
 
 
                             // if selected building exist
-                            if ((buildingSelected != null) && (MouseClickedBuilding == buildingSelected) && buildingSelected.Type != 0 && buildingSelected.Type != 4) {
+                            if ((buildingSelected != null) && (MouseClickedBuilding == buildingSelected) && buildingSelected.Type != 0 && buildingSelected.Type != 4)
+                            {
 
                                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                                 float enter;
@@ -341,15 +361,17 @@ namespace BE {
                                 buildingSelected.Move(vTarget);
                             }
                             // else camera panning
-                            else {
-                                Vector3 vDelta = (Input.mousePosition - mousePosOld) * cameraSpeed ;
+                            else
+                            {
+                                Vector3 vDelta = (Input.mousePosition - mousePosOld) * cameraSpeed;
                                 //Debug.Log(" MOUSE POSITION: " + Input.mousePosition + "  OLD: " + mousePosOld + "  CCC CAM POS: " + goCamera.transform.localPosition);
                                 //Debug.Log(" BG " + goCamera.GetComponent<Camera>().WorldToScreenPoint(bg.transform.localPosition));
 
                                 //goCamera.transform.position = vCamPosOld - vDelta;
                                 goCamera.transform.localPosition = new Vector3(vCamPosOld.x - vDelta.x, vCamPosOld.y - vDelta.y, goCamera.transform.localPosition.z);
-                                if (QA.s.first_game == 1) {
-                                   // Debug.Log("i am here!");
+                                if (QA.s.first_game == 1)
+                                {
+                                    // Debug.Log("i am here!");
                                     if (goCamera.transform.localPosition.x < -14.5f + 3.8f)
                                         goCamera.transform.localPosition = new Vector3(-14.5f + 3.8f, goCamera.transform.localPosition.y, goCamera.transform.localPosition.z);
                                     if (goCamera.transform.localPosition.x > 13.85f + 3.8)
@@ -359,7 +381,8 @@ namespace BE {
                                     if (goCamera.transform.localPosition.y > 15 - 9f)
                                         goCamera.transform.localPosition = new Vector3(goCamera.transform.localPosition.x, 15f - 9f, goCamera.transform.localPosition.z);
                                 }
-                                else {
+                                else
+                                {
                                     if (goCamera.transform.localPosition.x < -14.5f)
                                         goCamera.transform.localPosition = new Vector3(-14.5f, goCamera.transform.localPosition.y, goCamera.transform.localPosition.z);
                                     if (goCamera.transform.localPosition.x > 13.85f)
@@ -384,21 +407,24 @@ namespace BE {
                                 */
 
                                 lastMoveTime = Time.time;
-                               // Debug.Log(" DRAGGIN! lastMoveTime: " + lastMoveTime + " mousePosLast: " + mousePosLast + " AVGX: " + avgx + " AVGY: " + avgy + " | AVGDIST: " + avgDist);
+                                // Debug.Log(" DRAGGIN! lastMoveTime: " + lastMoveTime + " mousePosLast: " + mousePosLast + " AVGX: " + avgx + " AVGY: " + avgy + " | AVGDIST: " + avgDist);
 
                             }
                         }
                         // Not Move
-                        else {
+                        else
+                        {
                             avgx = 0;
                             avgy = 0;
                             avgDist = new Vector3(0, 0, 0);
 
-                            if (!Dragged) {
+                            if (!Dragged)
+                            {
                                 ClickAfter += Time.deltaTime;
-                                if (!bTemporarySelect && (ClickAfter > 0.5f)) {
+                                if (!bTemporarySelect && (ClickAfter > 0.5f))
+                                {
                                     bTemporarySelect = true;
-                                    Debug.Log ("Update2 buildingSelected:"+((buildingSelected != null) ? buildingSelected.name : "none"));
+                                    Debug.Log("Update2 buildingSelected:" + ((buildingSelected != null) ? buildingSelected.name : "none"));
                                     Pick();
                                 }
                             }
@@ -410,22 +436,27 @@ namespace BE {
                 #endregion
 
                 #region Release Mouse Button
-                else {
+                else
+                {
 
                     //Release MouseButton
-                    if (bInTouch) {
+                    if (bInTouch)
+                    {
                         //Debug.Log("b in touch");
                         bInTouch = false;
                         // if in drag state
-                        if (Dragged) {
+                        if (Dragged)
+                        {
                             //Debug.Log("DRAGGED STATE");
                             // seleted building exist
-                            if (buildingSelected != null) {
+                            if (buildingSelected != null)
+                            {
                                 // hide tile grid
                                 if (MouseClickedBuilding == buildingSelected && buildingSelected.Type != 0 && buildingSelected.Type != 4)
                                     BETween.alpha(ground.gameObject, 0.1f, 0.3f, 0.0f);
 
-                                if (buildingSelected.Landable && buildingSelected.OnceLanded) {
+                                if (buildingSelected.Landable && buildingSelected.OnceLanded)
+                                {
                                     //BuildingLandUnselect(false);
                                     Debug.Log("BuildingLandUnselect chamado 3");
                                 }
@@ -433,11 +464,13 @@ namespace BE {
                             }
 
                             //camera was moving!! slowdown its movement
-                            else if (QA.s.CameraNavigationOnRelease){
+                            else if (QA.s.CameraNavigationOnRelease)
+                            {
                                 float timeDif = Time.time - lastMoveTime;
                                 //Debug.Log("cameraStopping? " + cameraStopping + " timeDif " + timeDif);
 
-                                if (!cameraStopping && timeDif < 1f && timeDif > 0) {
+                                if (!cameraStopping && timeDif < 1f && timeDif > 0)
+                                {
                                     /*
                                     float dist = Vector3.Distance(Input.mousePosition, mousePosLast);
                                     float directionX, directionY;
@@ -466,7 +499,7 @@ namespace BE {
                                     if (avgDist.x == 0 && avgDist.y == 0) avgDist = Input.mousePosition - mousePosLast;
                                     else avgDist = (avgDist + Input.mousePosition - mousePosLast) / 2;
                                     //avgDist =  Input.mousePosition - mousePosLast;
-                                   // Debug.Log("AVGDIST: " + avgDist + "| LastmouseX: " + mousePosLast.x + " lastMouseY : " + mousePosLast.y + " MouseX: " + Input.mousePosition.x + " MouseY: " + Input.mousePosition.y + " LastMousePosZ: " + mousePosLast.z + " MouseZ " + Input.mousePosition.z);
+                                    // Debug.Log("AVGDIST: " + avgDist + "| LastmouseX: " + mousePosLast.x + " lastMouseY : " + mousePosLast.y + " MouseX: " + Input.mousePosition.x + " MouseY: " + Input.mousePosition.y + " LastMousePosZ: " + mousePosLast.z + " MouseZ " + Input.mousePosition.z);
 
                                     Vector3 vDelta = avgDist * cameraStopSpeed;
                                     Vector3 vForward = goCameraRoot.transform.forward;
@@ -480,9 +513,9 @@ namespace BE {
                                     Vector3 vMove = -vForward * vDelta.y + -vRight * vDelta.x;
                                     cameraStopping = true;
                                     goCameraRoot.transform.DOMove(goCameraRoot.transform.position + vMove, 0.5f).SetEase(Ease.OutQuad).OnComplete(() => cameraStopping = false);
-                                   // Debug.Log(" CamXold: " + vCamRootPosOld.x + " CamZold : " + vCamRootPosOld.z);
-                                   // Debug.Log("CamTrueX: " + goCameraRoot.transform.position.x + " CamTruY: " + goCamera.transform.position.z);
-                                   // Debug.Log(" VMoveX:  " + vMove.x + " VMoveZ:  " + vMove.z);
+                                    // Debug.Log(" CamXold: " + vCamRootPosOld.x + " CamZold : " + vCamRootPosOld.z);
+                                    // Debug.Log("CamTrueX: " + goCameraRoot.transform.position.x + " CamTruY: " + goCamera.transform.position.z);
+                                    // Debug.Log(" VMoveX:  " + vMove.x + " VMoveZ:  " + vMove.z);
 
                                     //goCameraRoot.transform.position = vCamRootPosOld + vMove;
 
@@ -490,32 +523,37 @@ namespace BE {
                             }
                         }
                         //unselect building
-                        else {
+                        else
+                        {
 
-                            if (bTemporarySelect) {
+                            if (bTemporarySelect)
+                            {
                                 // land building
-                                if ((buildingSelected != null) && (MouseClickedBuilding != buildingSelected) && buildingSelected.OnceLanded) {
+                                if ((buildingSelected != null) && (MouseClickedBuilding != buildingSelected) && buildingSelected.OnceLanded)
+                                {
 
                                     Debug.Log("BuildingLandUnselect chamado 1");
                                     BuildingLandUnselect(false);
                                 }
 
                             }
-                            else {
+                            else
+                            {
                                 // land building
-                                if ((buildingSelected != null) && (MouseClickedBuilding != buildingSelected) && buildingSelected.OnceLanded) {
+                                if ((buildingSelected != null) && (MouseClickedBuilding != buildingSelected) && buildingSelected.OnceLanded)
+                                {
                                     Debug.Log("BuildingLandUnselect chamado 2");
 
                                     BuildingLandUnselect(true);
                                 }
 
                                 //Debug.Log ("Update3 buildingSelected:"+((buildingSelected != null) ? buildingSelected.name : "none"));
-                                if(MouseClickedBuilding != buildingSelected || GLOBALS.s.TUTORIAL_OCCURING == true)
+                                if (MouseClickedBuilding != buildingSelected || GLOBALS.s.TUTORIAL_OCCURING == true)
                                 {
                                     Debug.Log(" PICK:");
                                     Pick();
                                 }
-                                
+
                             }
                         }
                     }
@@ -525,7 +563,8 @@ namespace BE {
 
                 #region Zoom
                 //zoom
-                if (!InFade && !cameraStopping && (GLOBALS.s.DIALOG_ALREADY_OPENED == false && GLOBALS.s.TUTORIAL_OCCURING == false)) {
+                if (!InFade && !cameraStopping && (GLOBALS.s.DIALOG_ALREADY_OPENED == false && GLOBALS.s.TUTORIAL_OCCURING == false))
+                {
                     zoomCurrent -= Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
                     zoomCurrent = Mathf.Clamp(zoomCurrent, zoomMin, zoomMax);
                     //goCamera.transform.localPosition = new Vector3(0,0,-zoomCurrent);
@@ -534,7 +573,8 @@ namespace BE {
                 }
 
                 // pinch zoom for mobile touch input
-                if (Input.touchCount == 2 && (GLOBALS.s.DIALOG_ALREADY_OPENED == false && GLOBALS.s.TUTORIAL_OCCURING == false)) {
+                if (Input.touchCount == 2 && (GLOBALS.s.DIALOG_ALREADY_OPENED == false && GLOBALS.s.TUTORIAL_OCCURING == false))
+                {
                     // Store both touches.
                     Touch touchZero = Input.GetTouch(0);
                     Touch touchOne = Input.GetTouch(1);
@@ -562,55 +602,56 @@ namespace BE {
         #endregion
 
         #region Exp and Capacity
-		public void move_camera_to_building(Vector3 pos, float duration = 0.5f, float customZoom = 6f, float custom_x = 0, float custom_z = 0)
+        public void move_camera_to_building(Vector3 pos, float duration = 0.5f, float customZoom = 6f, float custom_x = 0, float custom_z = 0)
         {
-			Debug.Log ("MMMMMMMMMMMMM MOVING CAMERA TO BUILDING !!!! ");
+            Debug.Log("MMMMMMMMMMMMM MOVING CAMERA TO BUILDING !!!! ");
             //pos = new Vector3(pos.x, pos.y, pos.z);
-			//Vector3 newPos = new Vector3(pos.x - 1.5f, pos.y, pos.z - 1.5f);
+            //Vector3 newPos = new Vector3(pos.x - 1.5f, pos.y, pos.z - 1.5f);
             Vector3 newPos = new Vector3(pos.x - 1.5f + custom_x, pos.y, pos.z - 1.5f + custom_z);
             Camera cam = goCamera.GetComponent<Camera>();
-            if (Math.Abs (cam.orthographicSize - customZoom) > 0.1f)
-                cam.DOOrthoSize(customZoom, duration).OnComplete(()=> zoomCurrent = customZoom);
+            if (Math.Abs(cam.orthographicSize - customZoom) > 0.1f)
+                cam.DOOrthoSize(customZoom, duration).OnComplete(() => zoomCurrent = customZoom);
 
             cameraStopping = true;
             goCameraRoot.transform.DOMove(newPos, duration).SetEase(Ease.OutQuad).OnComplete(() => cameraStopping = false);
         }
 
         //picking a building means that...
-        public void Pick() {
+        public void Pick()
+        {
 
-                Debug.Log("Pick buildingSelected:" + ((buildingSelected != null) ? buildingSelected.name : "none"));
-                //GameObject goSelectNew = null;
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
+            Debug.Log("Pick buildingSelected:" + ((buildingSelected != null) ? buildingSelected.name : "none"));
+            //GameObject goSelectNew = null;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit))
-                {
-               
+            {
+
                 //Debug.Log ("Pick"+hit.collider.gameObject.tag);
                 if (hit.collider.gameObject.tag == "Ground")
-                    {
+                {
                     Debug.Log("Nao sei o q é isso");
                     BuildingSelect(null);
-                        return;
-                    }
+                    return;
+                }
                 else if (hit.collider.gameObject.tag == "Building")
                 {
                     Debug.Log("Picked a Building");
                     Building buildingNew = BuildingFromObject(hit.collider.gameObject);
-                        if (buildingNew.HasCompletedWork())
-                            return;
+                    if (buildingNew.HasCompletedWork())
+                        return;
 
-                        //Dont select building when in tutorial
-                        if (GLOBALS.s.TUTORIAL_OCCURING == false && GLOBALS.s.DIALOG_ALREADY_OPENED == false)
-                            BuildingSelect(buildingNew);
-                            return;
-                        }
-                    else
-                    {
-                    
+                    //Dont select building when in tutorial
+                    if (GLOBALS.s.TUTORIAL_OCCURING == false && GLOBALS.s.DIALOG_ALREADY_OPENED == false)
+                        BuildingSelect(buildingNew);
+                    return;
                 }
-                
+                else
+                {
+
+                }
+
 
             }
             else
@@ -618,7 +659,7 @@ namespace BE {
                 Debug.Log("Dont Picked Any Building");
             }
 
-		}
+        }
 
 
 
@@ -629,75 +670,80 @@ namespace BE {
 
         // get building script
         // if child object was hitted, check parent 
-        public Building BuildingFromObject(GameObject go) {
-			Building buildingNew = go.GetComponent<Building>();
-			if(buildingNew == null)  buildingNew = go.transform.parent.gameObject.GetComponent<Building>();
+        public Building BuildingFromObject(GameObject go)
+        {
+            Building buildingNew = go.GetComponent<Building>();
+            if (buildingNew == null) buildingNew = go.transform.parent.gameObject.GetComponent<Building>();
 
-			return buildingNew;
-		}
+            return buildingNew;
+        }
 
-		// select building
-		public void BuildingSelect(Building buildingNew) {
+        // select building
+        public void BuildingSelect(Building buildingNew)
+        {
 
-			// if user select selected building again
-			bool SelectSame = (buildingNew == buildingSelected) ? true : false;
-           
-			if(buildingSelected != null) {
-                
+            // if user select selected building again
+            bool SelectSame = (buildingNew == buildingSelected) ? true : false;
+
+            if (buildingSelected != null)
+            {
+
                 // if initialy created building, then pass
                 if (!buildingSelected.OnceLanded) return;
-				// building can't land, then pass 
-				if(!buildingSelected.Landed && !buildingSelected.Landable) return;
+                // building can't land, then pass 
+                if (!buildingSelected.Landed && !buildingSelected.Landable) return;
 
                 // land building
                 Debug.Log("BuildingLandUnselect chamado 5");
                 BuildingLandUnselect(false);
                 UICommand.Hide();
                 //
-                
-			}
 
-			if(SelectSame) 
-				return;
+            }
 
-			buildingSelected = buildingNew;
+            if (SelectSame)
+                return;
 
-			if(buildingSelected != null) {
-				//Debug.Log ("Building Selected:"+buildingNew.gameObject.name+" OnceLanded:"+buildingNew.OnceLanded.ToString ());
-				// set scale animation to newly selected building
-				BETween bt = BETween.scale(buildingSelected.gameObject, 0.1f, new Vector3(1.0f,1.0f,1.0f), new Vector3(1.4f,1.4f,1.4f));
-				bt.loopStyle = BETweenLoop.pingpong;
+            buildingSelected = buildingNew;
+
+            if (buildingSelected != null)
+            {
+                //Debug.Log ("Building Selected:"+buildingNew.gameObject.name+" OnceLanded:"+buildingNew.OnceLanded.ToString ());
+                // set scale animation to newly selected building
+                BETween bt = BETween.scale(buildingSelected.gameObject, 0.1f, new Vector3(1.0f, 1.0f, 1.0f), new Vector3(1.4f, 1.4f, 1.4f));
+                bt.loopStyle = BETweenLoop.pingpong;
                 // se tbuilding state unland
                 Debug.Log("Land call 1");
-				buildingSelected.Land(false, true);
-                
+                buildingSelected.Land(false, true);
+
             }
-            
+
         }
 
-		public void BuildingLandUnselect(bool unselect, bool flagzita = false) {
+        public void BuildingLandUnselect(bool unselect, bool flagzita = false)
+        {
 
             if (buildingSelected == null)
             {
-                
+
                 return;
             }
             Debug.Log("Land call 2");
             buildingSelected.Land(true, true, false);
 
             //Dont select building created by tut (TH e Gate) or unselect flag
-            if ((unselect == true || GLOBALS.s.TUTORIAL_PHASE <4 && GLOBALS.s.TUTORIAL_OCCURING == true)  )
+            if ((unselect == true || GLOBALS.s.TUTORIAL_PHASE < 4 && GLOBALS.s.TUTORIAL_OCCURING == true))
             {
                 buildingSelected = null;
             }
 
             Save();
 
-			UICommand.Hide();
+            UICommand.Hide();
 
             //Eu que pus, para aparecer o HUD logo depois, tem q desaparecer e reaparecer para carregar os bts certos
             //O tempo do invoke parece n funcionar because of reasons
-           if (GLOBALS.s.TUTORIAL_PHASE < 4 && GLOBALS.s.TUTORIAL_OCCURING == true && unselect == false)
+            if (GLOBALS.s.TUTORIAL_PHASE < 4 && GLOBALS.s.TUTORIAL_OCCURING == true && unselect == false)
                 Invoke("UICommand.Show", 3);
 
             /*
@@ -714,26 +760,29 @@ namespace BE {
             */
         }
 
-        public void BuildingDelete() {
-			if(buildingSelected == null) return;
+        public void BuildingDelete()
+        {
+            if (buildingSelected == null) return;
             Debug.Log("Land call 3");
-            buildingSelected.Land (false, false);
-			BEGround.instance.BuildingRemove (buildingSelected);
-			Destroy (buildingSelected.gameObject);
-			buildingSelected = null;
-			Save ();
-		}
+            buildingSelected.Land(false, false);
+            BEGround.instance.BuildingRemove(buildingSelected);
+            Destroy(buildingSelected.gameObject);
+            buildingSelected = null;
+            Save();
+        }
 
         #endregion
 
         #region BUTTON basic fucntions
         //pause
-        public void OnButtonAttack() {
-			BEAudioManager.SoundPlay(6);
-		}
+        public void OnButtonAttack()
+        {
+            BEAudioManager.SoundPlay(6);
+        }
 
-		// user clicked shop button
-		public void OnButtonShop() {
+        // user clicked shop button
+        public void OnButtonShop()
+        {
             if (GLOBALS.s.TUTORIAL_OCCURING == true)
             {
                 Debug.Log("ON BUTTON SHOP - TUTORIAL OCURRING");
@@ -765,41 +814,46 @@ namespace BE {
         }
 
         // user clicked gem button
-        public void OnButtonGemShop() {
+        public void OnButtonGemShop()
+        {
             if (GLOBALS.s.TUTORIAL_OCCURING == false && GLOBALS.s.DIALOG_ALREADY_OPENED == false)
             {
                 BEAudioManager.SoundPlay(6);
                 UIShop.Show(ShopType.InApp);
             }
-		}
+        }
 
-		// user clicked house button
-		public void OnButtonHouse() {
+        // user clicked house button
+        public void OnButtonHouse()
+        {
             if (GLOBALS.s.TUTORIAL_OCCURING == false && GLOBALS.s.DIALOG_ALREADY_OPENED == false)
             {
                 BEAudioManager.SoundPlay(6);
                 UIShop.Show(ShopType.House);
             }
-		}
+        }
 
-		// user clicked option button
-		public void OnButtonOption() {
+        // user clicked option button
+        public void OnButtonOption()
+        {
             if (GLOBALS.s.TUTORIAL_OCCURING == false && GLOBALS.s.DIALOG_ALREADY_OPENED == false)
             {
                 BEAudioManager.SoundPlay(6);
                 UIOption.Show();
             }
-		}
+        }
 
 
         #endregion
 
-        public int CalculateTotalSoulsToNextLevel() {
+        public int CalculateTotalSoulsToNextLevel()
+        {
 
             return 1;
         }
         // add exp
-        public void GainExp(int exp) {
+        public void GainExp(int exp)
+        {
             Debug.Log("[GAIN EX] INIT: " + exp + " EXP TOTAL: " + ExpTotal);
             ExpTotal += exp;
             int NewLevel = TBDatabase.GetLevel(ExpTotal);
@@ -813,10 +867,12 @@ namespace BE {
             Debug.Log("[GAIN EX] NEW LEVEL: " + NewLevel + " | LEVELXPTOGET: " + LevelExpToGet + " LevelExpStart " + LevelExpStart);
 
             // if level up occured
-            if ((NewLevel > Level) && (Level != 0)) {
+            if ((NewLevel > Level) && (Level != 0))
+            {
                 // show levelup notify here
                 GLOBALS.s.USER_RANK = NewLevel;
-                if (GLOBALS.s.USER_RANK != 2) {
+                if (GLOBALS.s.USER_RANK != 2)
+                {
                     MenusController.s.createLevelUp();
                 }
             }
@@ -829,16 +885,17 @@ namespace BE {
 
 
         //check max capacity and, if it is the maximum, set it to maximum.
-        public void CapacityCheck() {
-			int GoldCapacityTotal = BEGround.instance.GetCapacityTotal(PayType.Gold);
-			int ElixirCapacityTotal = BEGround.instance.GetCapacityTotal(PayType.Elixir);
+        public void CapacityCheck()
+        {
+            int GoldCapacityTotal = BEGround.instance.GetCapacityTotal(PayType.Gold);
+            int ElixirCapacityTotal = BEGround.instance.GetCapacityTotal(PayType.Elixir);
             int SulfurCapacityTotal = BEGround.instance.GetCapacityTotal(PayType.Sulfur);
             int EvilnessCapacityTotal = BEGround.instance.GetCapacityTotal(PayType.Evilness);
 
-            Gold.MaxSet( GoldCapacityTotal );
-            Elixir.MaxSet( ElixirCapacityTotal );
-            Sulfur.MaxSet( SulfurCapacityTotal );
-            Evilness.MaxSet( EvilnessCapacityTotal );
+            Gold.MaxSet(GoldCapacityTotal);
+            Elixir.MaxSet(ElixirCapacityTotal);
+            Sulfur.MaxSet(SulfurCapacityTotal);
+            Evilness.MaxSet(EvilnessCapacityTotal);
 
             if (Gold.Target() > GoldCapacityTotal)
                 Gold.ChangeTo(GoldCapacityTotal);
@@ -857,30 +914,31 @@ namespace BE {
             Exp.CurrentMaxSet(ElixirCapacityTotal - LevelExpStart);
 
             BEGround.instance.DistributeByCapacity(PayType.Gold, (float)Gold.Target());
-			BEGround.instance.DistributeByCapacity(PayType.Elixir, (float)Elixir.Target());
+            BEGround.instance.DistributeByCapacity(PayType.Elixir, (float)Elixir.Target());
             BEGround.instance.DistributeByCapacity(PayType.Sulfur, (float)Sulfur.Target());
             //BEGround.instance.DistributeByCapacity(PayType.Evilness, (float)Evilness.Target());
 
             SoulProductionIncTotal = BEGround.instance.GetSoulProductionInc();
-		}
+        }
 
         #endregion
 
 
         #region Save (and encrypt)
         // related to save and load gamedata with xml format
-        bool    UseEncryption = false;
-		bool	bFirstRun = false;
-		string 	configFilename = "Config.dat";
-		int 	ConfigVersion = 1;
-		public	bool 	InLoading = false;
+        bool UseEncryption = false;
+        bool bFirstRun = false;
+        string configFilename = "Config.dat";
+        int ConfigVersion = 1;
+        public bool InLoading = false;
 
         // Do not save town when script quit.
         // save when action is occured
         // (for example, when building created, when start upgrade, when colled product, when training start)
         public void Save()
         {
-            if (QA.s.DontSave == false) { 
+            if (QA.s.DontSave == false)
+            {
 
                 if (InLoading) return;
 
@@ -927,12 +985,13 @@ namespace BE {
                     // ###############################
                 }
             }
-		}
+        }
 
         #endregion
 
         #region Load
-        public void Load() {
+        public void Load()
+        {
 
             if (QA.s.DontSave == false)
             {
@@ -1003,7 +1062,7 @@ namespace BE {
 
                 InLoading = false;
             }
-		}
+        }
 
         #endregion
 
@@ -1027,11 +1086,14 @@ namespace BE {
 
             Vector3 pos = new Vector3(21f, 0f, 10f);
             script.Move(pos);
-            if (GLOBALS.s.TUTORIAL_OCCURING) move_camera_to_building(pos,0.5f, 11, -6f, -6f);
+
+            Vector3 cameraPos = new Vector3(21f, 5f, 10f);
+            if (GLOBALS.s.TUTORIAL_OCCURING)
+                move_camera_to_building(cameraPos, 0.5f, 11, -6f, -6f);
 
             script.createExplosion();
             BuildingSelect(script);
-             BuildingLandUnselect(false);
+            BuildingLandUnselect(false);
         }
     }
 

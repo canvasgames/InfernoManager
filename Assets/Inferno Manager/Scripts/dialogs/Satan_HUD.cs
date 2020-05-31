@@ -6,31 +6,19 @@ using UnityEngine.UI;
 public class Satan_HUD : MonoBehaviour
 {
      GameObject finalPos;
-    // Use this for initialization
-    void Start()
-    {
-
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    float originalScale;
     public void moveSatan()
     {
+        originalScale = transform.localScale.x;
         finalPos = GameObject.Find("ButtonMissions");
-        transform.DOMove(finalPos.transform.position, 0.7f);
+        transform.DOMove(new Vector3(-6.37f, 4.36f,0f), 0.7f);
         transform.DOScale(0.15f, 1f ).OnComplete(createButton);
     }
 
     void createButton()
     {
         finalPos.transform.localScale = new Vector3(1, 1, 1);
-        MenusController.s.destroyMenu("Satan", null);
-
+        transform.DOScale(originalScale, 1f).OnComplete(createButton);
+        transform.gameObject.SetActive(false);
     }
-
-
 }

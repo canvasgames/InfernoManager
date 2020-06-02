@@ -22,6 +22,8 @@ public class TutorialController : MonoBehaviour
     GameObject tempObject;
     public GameObject HUD;
 
+    public GameObject TutFireBlocker;
+
     BE.Building[] buildings;
     DialogsTexts[] fscreen;
 
@@ -336,20 +338,8 @@ public class TutorialController : MonoBehaviour
         MenusController.s.moveMenu(MovementTypes.Left,tempObject, "SmallScroll", -292f, -113f);
 
         tempObject = (GameObject)Instantiate(Resources.Load("Prefabs/GreenCircle"));
-        MenusController.s.moveMenu(MovementTypes.Left, tempObject, "GreenCircle", -417, 289);
+        MenusController.s.moveMenu(MovementTypes.Left, tempObject, "GreenCircle", -382.8f, 289);
         tempObject.GetComponent<GreenCircle>().pulse();
-
-        //txtMaxSouls.GetComponent<textMaxSouls>().pulse();
-        //txtMaxSouls1.GetComponent<textMaxSouls>().pulse();
-        //txtMaxSouls2.GetComponent<textMaxSouls>().pulse();
-        // tempObject = (GameObject)Instantiate(Resources.Load("Prefabs/3DArrow"));
-        //MenusController.s.moveMenu(MovementTypes.Left, tempObject, "3DArrow", -429, 207);
-
-        // tempObject.GetComponent<Arrow3D>().googogogo();
-
-        //fscreen = GameObject.FindObjectsOfType(typeof(DialogsTexts)) as DialogsTexts[];
-        // fscreen[0].closeAndReopen();
-        // MenusController.s.repositeMenu("SmallScroll", null, -394f, -118f);
 
         Invoke("createNextButton", 2);
 
@@ -478,10 +468,8 @@ public class TutorialController : MonoBehaviour
         list[0].moveList();
 		Invoke("MovePlayerAvatar", 5);
 
-
        // DemonListScroll = GameObject.FindObjectsOfType(typeof(DemonListScrollbar)) as DemonListScrollbar[];
        // DemonListScroll[0].gameObject.SetActive(false);
-
     }
 
     #endregion
@@ -566,8 +554,6 @@ public class TutorialController : MonoBehaviour
         MenusController.s.destroyMenu("SmallScroll4Lines", null);
 
         GLOBALS.s.TUTORIAL_PHASE = 14;
-        //tempObject = (GameObject)Instantiate(Resources.Load("Prefabs/SmallScroll"));
-        //MenusController.s.moveMenu(MovementTypes.Right, tempObject, "SmallScroll", 252, 154);
         
         tempObject = (GameObject)Instantiate(Resources.Load("Prefabs/SmallScroll"));
         MenusController.s.moveMenu(MovementTypes.Right, tempObject, "SmallScroll", 252, 120);
@@ -576,8 +562,6 @@ public class TutorialController : MonoBehaviour
 
         tempObject = (GameObject)Instantiate(Resources.Load("Prefabs/DownArrow"));
         MenusController.s.moveMenu(MovementTypes.Right, tempObject, "DownArrow", 0, 0);
-
-        //curSatan.GetComponent<Animator>().Rebind();
 
         curSatan.SetActive(false);
         curSatan = SatanController.s.SatanExplaning;
@@ -589,7 +573,7 @@ public class TutorialController : MonoBehaviour
     //Indicate tab of fire mine
     public void indicateTabFireMine()
     {
-        BE.SceneTown.instance.move_camera_to_building(new Vector3(16, 0, 12),0.5f,14f);
+        BE.SceneTown.instance.move_camera_to_building(new Vector3(6.5f, 0, 8.5f),0.5f,14f);
         curSatan.SetActive(false);
 
         MenusController.s.repositeMenu("SmallScroll", null, 0f, 155f, 0.9F);
@@ -606,9 +590,8 @@ public class TutorialController : MonoBehaviour
     //Clicked tab
     public void pressBuildImpCasePressed()
     {
-   
         GLOBALS.s.TUTORIAL_PHASE = 15;
-
+        TutFireBlocker.SetActive(true);
         fscreen = GameObject.FindObjectsOfType(typeof(DialogsTexts)) as DialogsTexts[];
         fscreen[0].closeAndReopen();
         MenusController.s.destroyMenu("DownArrow", null);
@@ -619,6 +602,7 @@ public class TutorialController : MonoBehaviour
     //Imp pit pressed, place it msg
     public void impClicked()
     {
+        TutFireBlocker.SetActive(false);
         GLOBALS.s.LOCK_CAMERA_TUTORIAL = false;
         GLOBALS.s.LOCK_CLICK_TUTORIAL = false;
         GLOBALS.s.TUTORIAL_PHASE = 16;
@@ -635,7 +619,6 @@ public class TutorialController : MonoBehaviour
         GLOBALS.s.TUTORIAL_PHASE = 17;
         tempObject = (GameObject)Instantiate(Resources.Load("Prefabs/SmallScroll"));
         MenusController.s.moveMenu(MovementTypes.Right, tempObject, "SmallScroll", -18f, -302f);
-
 
         buildings = FindObjectsOfType(typeof(BE.Building)) as BE.Building[];
         foreach (BE.Building element in buildings)

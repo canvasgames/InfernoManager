@@ -34,11 +34,6 @@ namespace BE {
         public GameObject soulsValueTxt;
 
 
-
-        void Update () {
-          
-        }
-
 		// when user clicked collect dialog
 		public void OnButtonCollect() {
             Debug.Log("UInfo collect");
@@ -48,10 +43,6 @@ namespace BE {
                 // do collect
                 building.Collect();
             }
-            
-
         }
-		
 	}
-	
 }

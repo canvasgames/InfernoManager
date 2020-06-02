@@ -2,8 +2,6 @@
 using System.Collections;
 
 public class MainCamera : MonoBehaviour {
-
-
     // Use this for initialization
     /*void Start() {
 
@@ -46,9 +44,4 @@ public class MainCamera : MonoBehaviour {
             camera.rect = rect;
         }
     }*/
-
-    // Update is called once per frame
-    void Update () {
-	
-	}
 }

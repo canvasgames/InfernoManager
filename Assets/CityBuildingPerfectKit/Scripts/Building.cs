@@ -163,11 +163,6 @@ namespace BE
 
         #endregion ====================
 
-        void Start()
-        {
-
-        }
-
         void Update()
         {
 
@@ -229,6 +224,7 @@ namespace BE
                 // is minimum resources generated, then ser collectable flagand show dialog
                 if (((int)Production >= 10) && !uiInfo.groupCollect.gameObject.activeInHierarchy)
                 {
+
                     if (appearedCollectIcon == false)
                     {
                         appearedCollectIcon = true;
@@ -243,6 +239,8 @@ namespace BE
                             Invoke("delayCollect", 2f);
                         }
                     }
+                    if(GLOBALS.s.TUTORIAL_PHASE == 11)
+                        delayCollect();
                 }
 
                 if (Collectable)
@@ -366,12 +364,11 @@ namespace BE
             // instantiate mesh and set to goCenter
             GameObject prefabMesh = Resources.Load(meshPath) as GameObject;
 
-            // goCenter = (GameObject)Instantiate(prefabMesh, Vector3.zero, Quaternion.identity);
-            goCenter = (GameObject)Instantiate(prefabMesh, Vector3.zero, Quaternion.identity);
+            goCenter = Instantiate(prefabMesh, Vector3.zero, Quaternion.identity);
 
             goCenter.transform.SetParent(gameObject.transform);
-            //goCenter.transform.localPosition = Vector3.zero;
-            goCenter.transform.localPosition = prefabMesh.transform.localPosition;
+                goCenter.transform.localPosition = prefabMesh.transform.localPosition;
+
             goCenter.transform.localRotation = Quaternion.Euler(0, -90, 0);
 
             // if wall
@@ -454,8 +451,6 @@ namespace BE
                     SceneTown.instance.BuildingLandUnselect(true, true);
                 }
             }
-
-            //uiInfo.groupCollect.gameObject.SetActive(true); //APAGAR
         }
 
         public void UpjustYByState()
@@ -501,12 +496,15 @@ namespace BE
             Debug.Log("Land called = PARAMETERS");
             Debug.Log("landed = " + landed);
             Debug.Log("animate = " + animate);
-            Debug.Log(" ");
+            Debug.Log("-----");
 
             if (Landed == landed)
             {
                 Debug.Log("Landed by landed flag");
-
+                if(GLOBALS.s.TUTORIAL_PHASE == 9)
+                {
+                    ground.Move(gameObject, new Vector3(tilePos.x - 4, tilePos.y - 4), tileSize);
+                }
                 return;
 
             }

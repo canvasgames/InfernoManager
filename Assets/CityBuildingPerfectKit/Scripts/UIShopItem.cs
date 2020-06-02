@@ -36,10 +36,6 @@ namespace BE {
 		public 	Text 		BuildCountInfo;
 		public 	Text 		BuildCount;
 
-		void Start () {
-			
-		}
-
 		void Update () {
 
 			// change price text color by checking resources
@@ -149,6 +145,7 @@ namespace BE {
                         else if (GLOBALS.s.TUTORIAL_PHASE == 15)
                         {
                             TutorialController.s.impClicked();
+							Destroy(gameObject);
                         }
                     }
                     if (GLOBALS.s.TUTORIAL_PHASE != 21 || bt.ID == 3)

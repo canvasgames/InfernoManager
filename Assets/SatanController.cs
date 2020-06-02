@@ -44,7 +44,7 @@ public class SatanController : MonoBehaviour {
 
     IEnumerator SatanFinishTalk()
     {
-        yield return new WaitForSeconds(2.3f);
+        yield return new WaitForSeconds(3.5f);
         introText.text = "";
         introText.gameObject.SetActive(false);
     }

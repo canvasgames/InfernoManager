@@ -103,11 +103,9 @@ public class DialogsTexts : MonoBehaviour
             if (GLOBALS.s.TUTORIAL_PHASE == 1)
             {
                 Debug.Log("LOCAL POSITION: " + myText.GetComponentInChildren<Text>().transform.localPosition);
-                text_to_display = "That was quite  an entrance,\nright?";
+                text_to_display = "That was quite an\nentrance, right?";
                 ChangeTextFormat("l");
             }
-
-            //text_to_display = "Hi, I'm Satan!  \n You've been promoted to DEMON LORD!";
 
             else if (GLOBALS.s.TUTORIAL_PHASE == 2)
                 text_to_display = "You're now in charge of\nthis area of the Hell.\nThat's your Palace.";
@@ -116,7 +114,6 @@ public class DialogsTexts : MonoBehaviour
             else if (GLOBALS.s.TUTORIAL_PHASE == 4)
             {
                 text_to_display = "Tap to Collect Souls.";
-                //myText.GetComponentInChildren<Text>().alignment = TextAnchor.MiddleCenter;
             }
             else if (GLOBALS.s.TUTORIAL_PHASE == 5)
                 text_to_display = "It seems we have nowhere\nto place the souls..\nWhat's your suggestion?";
@@ -124,7 +121,7 @@ public class DialogsTexts : MonoBehaviour
                 text_to_display = "For <color=#fe2323>Antichrist sake!</color>\nWhy did I promoted you?\nThey deserve <color=#fe2323>Punishment!</color>";
             //
             else if (GLOBALS.s.TUTORIAL_PHASE == 7)
-                text_to_display = "Now lets punish this sinner souls.\nTap the <color=green>Build Button</color>.";
+                text_to_display = "Now lets punish this\nsinner souls.\nTap the <color=green>Build Button</color>.";
             else if (GLOBALS.s.TUTORIAL_PHASE == 8)
                 text_to_display = "Select one of the\n<color=#fe2323>Punisher Buldings!</color>";
             // text_to_display = "Hold the finger over the building and drag to replace it and Confirm.";
@@ -136,7 +133,7 @@ public class DialogsTexts : MonoBehaviour
 
             // text_to_display = "Tap to Collect Sadness.";
             else if (GLOBALS.s.TUTORIAL_PHASE == 10)
-                text_to_display = "<color=#fe2323>Punisher Buildings</color> increases\nyour <color=#fe2323>Souls Capacity</color>";
+                text_to_display = "<color=#fe2323>Punisher Buildings</color> \nincreases your \n<color=#fe2323>Souls Capacity</color>";
 
             else if (GLOBALS.s.TUTORIAL_PHASE == -1)
             {

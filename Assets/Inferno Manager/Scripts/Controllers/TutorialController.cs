@@ -123,7 +123,7 @@ public class TutorialController : MonoBehaviour
     public void tutorial1EnterOtherStuff()
     {
         tempObject = (GameObject)Instantiate(Resources.Load("Prefabs/SmallScroll"));
-        MenusController.s.moveMenu(MovementTypes.Left, tempObject, "SmallScroll", 0, 0);
+        MenusController.s.moveMenu(MovementTypes.Left, tempObject, "SmallScroll", 0, -281f);
 
         Invoke("createNextButton", 2f);
     }
@@ -259,7 +259,7 @@ public class TutorialController : MonoBehaviour
         fscreen[0].closeAndDestroy();
 
         tempObject = (GameObject)Instantiate(Resources.Load("Prefabs/SmallScroll"));
-        MenusController.s.moveMenu(MovementTypes.Right, tempObject, "SmallScroll", 0, 0, "", false, false, 0.5f);
+        MenusController.s.moveMenu(MovementTypes.Right, tempObject, "SmallScroll", 0, -281, "", false, false, 0.5f);
         Invoke("createNextButton", 2);
 
     }
@@ -364,7 +364,7 @@ public class TutorialController : MonoBehaviour
         fscreen = GameObject.FindObjectsOfType(typeof(DialogsTexts)) as DialogsTexts[];
         fscreen[0].closeAndReopen();
         
-        MenusController.s.repositeMenu("SmallScroll", null, 256f, -303f);
+        MenusController.s.repositeMenu("SmallScroll", null, 256f, -281f);
 
         buildings = GameObject.FindObjectsOfType(typeof(BE.Building)) as BE.Building[];
         foreach (BE.Building element in buildings)
@@ -494,7 +494,7 @@ public class TutorialController : MonoBehaviour
         MenusController.s.destroyMenu("SatanHandCatBT",null);
 
         tempObject = (GameObject)Instantiate(Resources.Load("Prefabs/SmallScroll"));
-        MenusController.s.moveMenu(MovementTypes.Left, tempObject, "SmallScroll", -403, -328);
+        MenusController.s.moveMenu(MovementTypes.Left, tempObject, "SmallScroll", -403, -295.83f);
         //MenusController.s.repositeMenu("SmallScroll", null,-403, -328,0.8f);
         tempObject.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
         Invoke("createNextButton", 2);
@@ -576,7 +576,7 @@ public class TutorialController : MonoBehaviour
         BE.SceneTown.instance.move_camera_to_building(new Vector3(6.5f, 0, 8.5f),0.5f,14f);
         curSatan.SetActive(false);
 
-        MenusController.s.repositeMenu("SmallScroll", null, 0f, 155f, 0.9F);
+        MenusController.s.repositeMenu("SmallScroll", null, 0f, 145f, 0.9F);
         MenusController.s.repositeMenu("DownArrow", null, -190f, -215f);
 
         fscreen = GameObject.FindObjectsOfType(typeof(DialogsTexts)) as DialogsTexts[];
@@ -618,7 +618,7 @@ public class TutorialController : MonoBehaviour
         GLOBALS.s.LOCK_CAMERA_TUTORIAL = true;
         GLOBALS.s.TUTORIAL_PHASE = 17;
         tempObject = (GameObject)Instantiate(Resources.Load("Prefabs/SmallScroll"));
-        MenusController.s.moveMenu(MovementTypes.Right, tempObject, "SmallScroll", -18f, -302f);
+        MenusController.s.moveMenu(MovementTypes.Right, tempObject, "SmallScroll", -18f, -281f);
         BE.SceneTown.instance.move_camera_to_building(new Vector3(1.5f, 0, 3.5f),0.5f,14);
 
         buildings = FindObjectsOfType(typeof(BE.Building)) as BE.Building[];
@@ -686,8 +686,8 @@ public class TutorialController : MonoBehaviour
         GLOBALS.s.LOCK_CLICK_TUTORIAL = false;
         GLOBALS.s.TUTORIAL_PHASE = 0;
         GLOBALS.s.TUTORIAL_OCCURING = false;
-
-        curSatan.GetComponent<Satan_HUD>().moveSatan();
+        curSatan.SetActive(false);
+        SatanController.s.SatanCanvasEnd.SetActive(true);
         MenusController.s.goOutDestroy("BigScroll", null,"right");
 
         // PlayerPrefs.SetInt("firstGame", 1);

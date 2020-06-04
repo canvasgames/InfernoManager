@@ -11,6 +11,7 @@ public class SatanController : MonoBehaviour {
     private GameObject CatExplosion;
 
     public Text introText;
+    public GameObject SatanCanvasEnd;
 
     [Header("SatanStates")]
     public GameObject SatanIntro;
@@ -47,5 +48,7 @@ public class SatanController : MonoBehaviour {
         yield return new WaitForSeconds(3.5f);
         introText.text = "";
         introText.gameObject.SetActive(false);
+        yield return new WaitForSeconds(1.5f);
+        SatanIntro.SetActive(false);
     }
 }

@@ -269,7 +269,6 @@ namespace BE {
 			// if previous selected building is exist, unselect that building
 			// because newly created building must be in selection state
 			if(SceneTown.buildingSelected != null) {
-                Debug.Log("eu chamei 1");
                 SceneTown.instance.BuildingLandUnselect(true);
 			}
 
@@ -376,10 +375,6 @@ namespace BE {
 				else {
 					SetValue = ValueStart;
 				}
-
-                Debug.Log("T CAPACITY> " + capacitylist[i].Capacity.Length );
-                Debug.Log("T >>> " + (int)type);
-
                 capacitylist[i].Capacity[(int)type] = SetValue;
 			}
 		}

@@ -29,11 +29,6 @@ public class CreateDemonsScrollView : MonoBehaviour {
         //transform.DOLocalMoveY(GetComponent<RectTransform>().rect.height, 3f);
     }
 	
-	// Update is called once per frame
-	void Update () {
-
-	}
-
     public void moveList()
     {
         //transform.DOLocalMoveY(-GetComponent<RectTransform>().rect.height - 1010, 12f);
@@ -45,7 +40,6 @@ public class CreateDemonsScrollView : MonoBehaviour {
 
     void createLine(float yPosition, int numberOfAvatarsInLine, float xSpacing, int line)
     {
-
         //Create Rank txt
         createObject(line, 0, -xSpacing * 2 - 30 + xMiddle, yPosition);
 
@@ -98,11 +92,6 @@ public class CreateDemonsScrollView : MonoBehaviour {
                 myPlaceholder.GetComponent<Text>().text = "Baron";
             else if (line == 5)
                 myPlaceholder.GetComponent<Text>().text = "Lord";
-
-
-            
-                
-                
         }
     }
 }

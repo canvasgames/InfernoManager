@@ -77,7 +77,6 @@ namespace BE
             {
                 views[i].SetActive(toggleButtons[i].isOn ? true : false);
                 contents[i].SetActive(toggleButtons[i].isOn ? true : false);
-                Debug.Log(GLOBALS.s.TUTORIAL_PHASE + " sss " + value + "kkkk" + i);
                 if (GLOBALS.s.TUTORIAL_PHASE == 15 && value == 1 && i == 1)
                     views[i].GetComponent<ScrollRect>().horizontal = false;
                 else

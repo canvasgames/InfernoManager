@@ -651,8 +651,6 @@ namespace BE
                 {
 
                 }
-
-
             }
             else
             {
@@ -661,13 +659,7 @@ namespace BE
 
         }
 
-
-
-
         #region BUILDING functions
-
-
-
         // get building script
         // if child object was hitted, check parent 
         public Building BuildingFromObject(GameObject go)
@@ -681,13 +673,11 @@ namespace BE
         // select building
         public void BuildingSelect(Building buildingNew)
         {
-
             // if user select selected building again
             bool SelectSame = (buildingNew == buildingSelected) ? true : false;
 
             if (buildingSelected != null)
             {
-
                 // if initialy created building, then pass
                 if (!buildingSelected.OnceLanded) return;
                 // building can't land, then pass 
@@ -722,7 +712,6 @@ namespace BE
 
         public void BuildingLandUnselect(bool unselect, bool flagzita = false)
         {
-
             if (buildingSelected == null)
             {
 
@@ -1072,8 +1061,10 @@ namespace BE
             Vector3 pos = new Vector3(7.1f, 0f, 16.8f);
             script.Move(pos);
             pos = new Vector3(0f, 0f, 13f);
-
-            if (GLOBALS.s.TUTORIAL_OCCURING) move_camera_to_building(pos, 0.5f, 14, 3f, 3f);
+            if (GLOBALS.s.TUTORIAL_OCCURING)
+            {
+                move_camera_to_building(pos, 0.5f, 14, 3f, 3f);
+            }
 
             script.createExplosion();
             BuildingSelect(script);
@@ -1088,8 +1079,11 @@ namespace BE
             script.Move(pos);
 
             Vector3 cameraPos = new Vector3(21f, 5f, 10f);
+
             if (GLOBALS.s.TUTORIAL_OCCURING)
+            {
                 move_camera_to_building(cameraPos, 0.5f, 11, -6f, -6f);
+            }
 
             script.createExplosion();
             BuildingSelect(script);

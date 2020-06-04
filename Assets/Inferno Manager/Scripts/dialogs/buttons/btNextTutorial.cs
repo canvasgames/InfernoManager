@@ -70,22 +70,16 @@ public class btNextTutorial : ButtonCap
         }
         else if (GLOBALS.s.TUTORIAL_PHASE == 8)
         {
-
             MenusController.s.destroyMenu("ArowNext", null);
             TutorialController.s.destroySelectPunisher();
-
         }
-
-
         else if (GLOBALS.s.TUTORIAL_PHASE == 10)
         {
             MenusController.s.destroyMenu("ArowNext", null);
             TutorialController.s.collectSoulsAgain();
 
         }
-
         // After Back to serious
-
         else if(GLOBALS.s.TUTORIAL_PHASE == 11)
         {
             TutorialController.s.blablaQuemEhVcNaFilaDoPao();
@@ -99,33 +93,26 @@ public class btNextTutorial : ButtonCap
         }
         else if (GLOBALS.s.TUTORIAL_PHASE == 13)
         {
-
             MenusController.s.destroyMenu("ArowNext", null);
             TutorialController.s.start_chicken_tutorial();
-           
-
         }
         else if (GLOBALS.s.TUTORIAL_PHASE == -14)
         {
-
             MenusController.s.destroyMenu("ArowNext", null);
             //TutorialController.s.backPhase13();
             TutorialController.s.start_chicken_tutorial();
-
         }
 
         else if (GLOBALS.s.TUTORIAL_PHASE == -2)
         {
             MenusController.s.destroyMenu("ArowNext", null);
             TutorialController.s.pressBuildBtConstructImp();
-
         }
 
         else if (GLOBALS.s.TUTORIAL_PHASE == 18)
         {
             MenusController.s.destroyMenu("ArowNext", null);
             TutorialController.s.ILlBeThereForYou();
-
         }
         else if (GLOBALS.s.TUTORIAL_PHASE == 19)
         {
@@ -134,6 +121,4 @@ public class btNextTutorial : ButtonCap
 
         }
     }
-
-
 }

@@ -180,7 +180,6 @@ public class TutorialController : MonoBehaviour
 
         Invoke("createGate", 0.3f);
         Invoke("createNextButton", 2);
-        
     }
 
     void createGate()
@@ -293,6 +292,7 @@ public class TutorialController : MonoBehaviour
     public void clickedBuildBt()
     {
         Debug.Log("[TUT] 8 SELECT A BUILDING");
+
         BE.SceneTown.instance.move_camera_to_building(new Vector3(13, 3, 1),0.5f,10);
         curSatan.SetActive(false);
 
@@ -482,10 +482,10 @@ public class TutorialController : MonoBehaviour
     {
         GLOBALS.s.TUTORIAL_PHASE = -13;
         tempObject = (GameObject)Instantiate(Resources.Load("Prefabs/SmallScroll"));
-        MenusController.s.moveMenu(MovementTypes.Left, tempObject, "SmallScroll", -22f, 38);
+        MenusController.s.moveMenu(MovementTypes.Left, tempObject, "SmallScroll", -22f, 112);
 
         tempObject = (GameObject)Instantiate(Resources.Load("Prefabs/SatanHandCatBT"));
-        MenusController.s.moveMenu(MovementTypes.Right, tempObject, "SatanHandCatBT", 389, 77.5f);
+        MenusController.s.moveMenu(MovementTypes.Right, tempObject, "SatanHandCatBT", 368, 35f);
     }
 
     public void niceCity()
@@ -619,6 +619,7 @@ public class TutorialController : MonoBehaviour
         GLOBALS.s.TUTORIAL_PHASE = 17;
         tempObject = (GameObject)Instantiate(Resources.Load("Prefabs/SmallScroll"));
         MenusController.s.moveMenu(MovementTypes.Right, tempObject, "SmallScroll", -18f, -302f);
+        BE.SceneTown.instance.move_camera_to_building(new Vector3(1.5f, 0, 3.5f),0.5f,14);
 
         buildings = FindObjectsOfType(typeof(BE.Building)) as BE.Building[];
         foreach (BE.Building element in buildings)

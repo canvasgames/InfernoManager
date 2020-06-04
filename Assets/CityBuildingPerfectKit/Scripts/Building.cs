@@ -183,7 +183,7 @@ namespace BE
             if (Landed && !InUpgrade && (def != null) && (def.eProductionType != PayType.None))
             {
                 //if(def.eProductionType == PayType.Elixir)
-                   // Production = 100;
+                // Production = 100;
                 if (GLOBALS.s != null && (GLOBALS.s.TUTORIAL_PHASE == 4 || GLOBALS.s.TUTORIAL_PHASE == 17))
                 {
                     //Automatically generate souls or fire for tutorial
@@ -204,10 +204,10 @@ namespace BE
                     {
                         Production += (float)def.ProductionRate * deltaTime * GLOBALS.s.ELIXIR_RESEARCH_EXTRA_PERCENTAGE * QA.s.ProductionMultiplier;
                     }
-                    
+
                     else if (def.eProductionType == PayType.Sulfur)
                     {
-                        Production += ((float)def.ProductionRate * deltaTime * QA.s.ProductionMultiplier)/5;
+                        Production += ((float)def.ProductionRate * deltaTime * QA.s.ProductionMultiplier) / 5;
                     }
 
                     else if (def.eProductionType == PayType.Evilness)
@@ -239,7 +239,7 @@ namespace BE
                             Invoke("delayCollect", 2f);
                         }
                     }
-                    if(GLOBALS.s.TUTORIAL_PHASE == 11)
+                    if (GLOBALS.s.TUTORIAL_PHASE == 11)
                         delayCollect();
                 }
 
@@ -296,14 +296,22 @@ namespace BE
             uiInfo.soulsValueTxt.SetActive(false);
         }
 
-		public void activateHandTutorialUI(int type, bool hell_gate = false)
+        public void activateHandTutorialUI(int type, bool hell_gate = false)
         {
             if (type == Type)
             {
                 uiInfo.SatanHand.gameObject.SetActive(true);
                 Vector3 pos = new Vector3(goCenter.transform.position.x + 1.5f, 5f, goCenter.transform.position.z + 1.5f);
-				if (!hell_gate) SceneTown.instance.move_camera_to_building(pos, 0.5f, 8);
-				else SceneTown.instance.move_camera_to_building(pos, 0.5f, 11, -6f, -6f);
+                Debug.Log(hell_gate + " APAGAR " + GLOBALS.s.TUTORIAL_PHASE);
+                if (GLOBALS.s.TUTORIAL_PHASE == 17)
+                    return;
+                else if (!hell_gate)
+                    SceneTown.instance.move_camera_to_building(pos, 0.5f, 8);
+                else
+                {
+                    //if (GLOBALS.s.TUTORIAL_PHASE == 11)
+                    SceneTown.instance.move_camera_to_building(pos, 0.5f, 11, -6f, -6f);
+                }
             }
 
         }
@@ -367,7 +375,7 @@ namespace BE
             goCenter = Instantiate(prefabMesh, Vector3.zero, Quaternion.identity);
 
             goCenter.transform.SetParent(gameObject.transform);
-                goCenter.transform.localPosition = prefabMesh.transform.localPosition;
+            goCenter.transform.localPosition = prefabMesh.transform.localPosition;
 
             goCenter.transform.localRotation = Quaternion.Euler(0, -90, 0);
 
@@ -496,15 +504,13 @@ namespace BE
             Debug.Log("Land called = PARAMETERS");
             Debug.Log("landed = " + landed);
             Debug.Log("animate = " + animate);
-            Debug.Log("-----");
+            Debug.Log("----- " + GLOBALS.s.TUTORIAL_PHASE);
 
             if (Landed == landed)
             {
-                Debug.Log("Landed by landed flag");
-                if(GLOBALS.s.TUTORIAL_PHASE == 9)
-                {
+                // Debug.Log("Landed by landed flag " + GLOBALS.s.TUTORIAL_PHASE);
+                if (GLOBALS.s.TUTORIAL_PHASE == 9 || GLOBALS.s.TUTORIAL_PHASE == 16)
                     ground.Move(gameObject, new Vector3(tilePos.x - 4, tilePos.y - 4), tileSize);
-                }
                 return;
 
             }
@@ -518,8 +524,8 @@ namespace BE
 
 
                 tilePos = tilePosOld;
-                //Debug.Log ("Land RecoverOldPos: "+TilePosOldX.ToString()+","+TilePosOldY.ToString());
-                ground.Move(gameObject, tilePos, tileSize);
+                ground.Move(gameObject, new Vector3(tilePos.x - 4, tilePos.y - 4), tileSize);
+
                 CheckLandable();
 
                 if (!Landable)
@@ -530,9 +536,7 @@ namespace BE
 
             }
 
-            Debug.Log(Landed + " Landed state antes");
             Landed = landed;
-            Debug.Log(Landed + " Landed state depois");
             ground.OccupySet(this);
 
             if (!Landed)
@@ -545,14 +549,12 @@ namespace BE
                 if (!OnceLanded)
                 {
                     OnceLanded = true;
-
                 }
-
             }
 
 
             CheckLandable();
-           // Debug.Log("Activating or Not Grid, Is Landed Flag is?  " + Landed);
+            // Debug.Log("Activating or Not Grid, Is Landed Flag is?  " + Landed);
             if (Type != 0 && Type != 4)
             {
                 if (flagMarota == false)
@@ -596,7 +598,6 @@ namespace BE
 
                         BuildingType bt = TBDatabase.GetBuildingType(Type);
                         if (bt.ID >= 11 && bt.ID <= 15 && def != null)
-
                         {
                             uiInfo.soulsValue.SetActive(true);
                             uiInfo.soulsValueTxt.SetActive(true);
@@ -609,14 +610,12 @@ namespace BE
                             {
                                 uiInfo.soulsValueTxt.GetComponent<Text>().color = new Color(1, 1, 1);
                             }
-
                         }
-
                     }
                 }
                 else
                 {
-                   // Debug.Log("else do sei lá o q");
+                    // Debug.Log("else do sei lá o q");
                     uiInfo.groupInfo.alpha = Landed ? 0 : 1;
                     uiInfo.groupInfo.gameObject.SetActive(Landed ? false : true);
                 }
@@ -630,7 +629,7 @@ namespace BE
             {
                 SceneTown.instance.Save();
 
-               // Debug.Log("Landed Back to original color");
+                // Debug.Log("Landed Back to original color");
                 BEUtil.SetObjectColor(goCenter, Color.white);
                 BEUtil.SetObjectColor(goXInc, Color.white);
                 BEUtil.SetObjectColor(goZInc, Color.white);
@@ -803,15 +802,16 @@ namespace BE
                 defineCapacityTotalAndAllProduction();
                 if (AllProduction < CapacityTotal)
                 {
-                    if (GLOBALS.s.nTimesCollectedSouls == 0) {
+                    if (GLOBALS.s.nTimesCollectedSouls == 0)
+                    {
                         Production = 100;
                         GLOBALS.s.nTimesCollectedSouls++;
                     }
 
-                        initializeTxtAndParticle(Production);
+                    initializeTxtAndParticle(Production);
 
 
-                        //Verify if the production exceeded the capacity
+                    //Verify if the production exceeded the capacity
                     if (AllProduction + Production <= CapacityTotal)
                     {
                         Debug.Log("[COLLECT] Production is less than capacity total! " + Production);
@@ -1006,17 +1006,20 @@ namespace BE
             float scale = (12 / (Camera.main.orthographicSize));
             script.transform.localScale = new Vector3(scale, scale, scale);
             script.Init(transform, new Vector3(0, 1.0f, 0));
-            if (def.eProductionType == PayType.Elixir) {
+            if (def.eProductionType == PayType.Elixir)
+            {
                 Building[] buildings;
                 buildings = GameObject.FindObjectsOfType(typeof(Building)) as Building[];
                 int lenght = buildings.Length;
                 int i;
 
-                for (i = 0; i < lenght; i++) {
+                for (i = 0; i < lenght; i++)
+                {
                     buildings[i].scaleBuildingFullCase();
                 }
 
-                if (!GLOBALS.s.TUTORIAL_OCCURING) { 
+                if (!GLOBALS.s.TUTORIAL_OCCURING)
+                {
                     GameObject temp = (GameObject)Instantiate(Resources.Load("Prefabs/Text/WarningMessage"));
                     temp.transform.SetParent(MenusController.s.bigDaddy, false);
                     temp.GetComponent<Text>().text = "Build more Punisher Buildings!";
@@ -1024,8 +1027,10 @@ namespace BE
                 }
             }
 
-            if (def.eProductionType == PayType.Gold) {
-                if (!GLOBALS.s.TUTORIAL_OCCURING) {
+            if (def.eProductionType == PayType.Gold)
+            {
+                if (!GLOBALS.s.TUTORIAL_OCCURING)
+                {
                     GameObject temp = (GameObject)Instantiate(Resources.Load("Prefabs/Text/WarningMessage"));
                     temp.transform.SetParent(MenusController.s.bigDaddy, false);
                     temp.GetComponent<Text>().text = "Upgrade your Demon Palace!";
@@ -1043,7 +1048,7 @@ namespace BE
             int lenght = buildings.Length;
 
             float discountEach = 1;
-            int i = 0, cont=0;
+            int i = 0, cont = 0;
             float temp;
             while (value > 0)
             {
@@ -1068,7 +1073,7 @@ namespace BE
                 }
 
                 cont++;
-                if(cont > 1000)
+                if (cont > 1000)
                 {
                     break;
                 }
@@ -1084,25 +1089,25 @@ namespace BE
             {
                 int capacity = def.StorageCapacity[(int)PayType.Elixir];
 
-                
+
                 if (soulsQuant + quant <= capacity)
                 {
-                    if((portal_x !=666 || portal_y !=666) && myParticles2.Count < 30)
+                    if ((portal_x != 666 || portal_y != 666) && myParticles2.Count < 30)
                     {
                         myParticles2.Add((GameObject)Instantiate(Resources.Load("Prefabs/Elixir_rend")));
                         myParticles2[myParticles2.Count - 1].transform.localPosition = new Vector3(portal_x, portal_y, portal_z);
                         myParticles2[myParticles2.Count - 1].GetComponent<particle_soul>().vaiviado(transform.position.x, transform.position.y, transform.position.z);
                         Invoke("clearMyParticles2", 2);
                     }
- 
+
                     soulsQuant += quant;
-                    if(scaleSoulsAlreadyCalled == false)
+                    if (scaleSoulsAlreadyCalled == false)
                     {
                         scaleSoulsAlreadyCalled = true;
                         Invoke("scaleBuildingAndSouls", 0.1f);
                     }
-                    
-                    
+
+
                     return quant;
 
                 }
@@ -1161,7 +1166,7 @@ namespace BE
             else
             {
                 uiInfo.soulsValueTxt.GetComponent<Text>().color = new Color(1, 1, 1);
-            }        
+            }
             Invoke("clearTxtSouls", 1.4f);
         }
 
@@ -1169,7 +1174,7 @@ namespace BE
         {
             uiInfo.soulsValue.GetComponent<Image>().DOFade(0, 0.7f);
             uiInfo.soulsValueTxt.GetComponent<CanvasGroup>().DOFade(0, 0.7f).OnComplete(realyClear);
-            
+
         }
 
         void realyClear()
@@ -1205,7 +1210,7 @@ namespace BE
         public void createExplosion()
         {
             tempObject = (GameObject)Instantiate(explosion, new Vector3(gameObject.transform.position.x - 2, gameObject.transform.position.y + 2, gameObject.transform.position.z - 2), Quaternion.Euler(89f, 0f, 0f));
-           
+
         }
         // start upgrade
         public bool Upgrade()
@@ -1295,7 +1300,7 @@ namespace BE
 
                 GLOBALS.s.ELIXIR_RESEARCH_EXTRA_PERCENTAGE = GLOBALS.s.ELIXIR_RESEARCH_EXTRA_PERCENTAGE + (float)def.SoulProdutionInc / 100;
 
-                if(bt.ID == 15) BE.BEAudioManager.SoundPlay(12);
+                if (bt.ID == 15) BE.BEAudioManager.SoundPlay(12);
 
             }
 

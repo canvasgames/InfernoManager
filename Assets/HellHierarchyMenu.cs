@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using DG.Tweening;
+using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class HellHierarchyMenu : MonoBehaviour {
 
@@ -15,16 +17,20 @@ public class HellHierarchyMenu : MonoBehaviour {
 	
 	}
 
+	private void OnEnable()
+	{
+		Debug.Log(GLOBALS.s.TUTORIAL_PHASE);
+		if (GLOBALS.s.TUTORIAL_PHASE == 13)
+			GetComponentInChildren<ScrollRect>().vertical = false;
+		else
+			GetComponentInChildren<ScrollRect>().vertical = true;
+	}
+
 	public void advance_player(){
 		player.transform.DOLocalMoveY(player.transform.localPosition.y - level_dist, 0.8f).SetEase (Ease.InOutCubic).OnComplete (advance_player_finished);
 	}
 
 	void advance_player_finished(){
 		TutorialController.s.clickDemonLordToOpenCity ();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 }
